@@ -25,14 +25,22 @@ class RdfController extends CI_Controller {
 		// Create an empty Model
 		$model = ModelFactory::getResModel(MEMMODEL);
 		
-		// Create the resources
+		
+		
+	/*	// Create the resources
 		$fullNameLiteral = $model->createLiteral($fullName);
 		$johnSmith = $model->createResource($personURI);
+		
+		
+		
 		$vcard_FN= $model->createProperty(VCARD_NS.'FN');
 		$vcard_NICKNAME= $model->createProperty(VCARD_NS.'NICKNAME');
 		
 		// Add the property
 		$johnSmith->addProperty($vcard_FN, $fullNameLiteral);
+		
+		
+		
 		
 		// Retrieve the John Smith vcard resource from the model
 		$vCard = $model->createResource($personURI);
@@ -54,6 +62,43 @@ class RdfController extends CI_Controller {
 		{
 			echo $currentResource->getLabelObject().'<BR>';
 		};
+		*/
+		
+		//$rdfGraph = ModelFactory::getDefaultModel();
+		
+		// ucitavanje RDF grafa
+		//$exists = file_exists($rdfGraphName);
+		
+		//if($exists==true)
+	//	{
+			// ovde se prosledi ime RDF grafa, tj putanja i ime
+			//$rdfGraph->load($rdfGraphName);
+	//	}
+		
+		
+
+		$subject = $model->createResource("fejs");
+		$object = $model->createLiteral("zaraza");
+		$predicate = $model->createResource("je");
+		
+		
+		$fullNameLiteral1 = $model->createLiteral("true");
+		$tFalse= $model->createProperty("true");
+		
+		// Add the property
+		$predicate->addProperty($tFalse, $fullNameLiteral1);
+		
+		
+		
+		$statement = new Statement ($subject, $predicate, $object);
+		
+		$model->addWithoutDuplicates($statement);
+		
+		$model->saveAs("modelRes.rdf", "rdf");
+		
+		//$model->close();
+		
+		
 		
 	}
 
