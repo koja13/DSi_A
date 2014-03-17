@@ -15,6 +15,46 @@ class RdfController extends CI_Controller {
 	function index()
 	{	
 		$this->load->library("simple_html_dom");
+		
+		
+		// Some definitions
+		//define('VCARD_NS', 'http://www.w3.org/2001/vcard-rdf/3.0#');
+		$personURI = "http://somewhere/JohnSmith";
+		$fullName = "John Smith";
+		
+		// Create an empty Model
+		$model = ModelFactory::getResModel(MEMMODEL);
+		
+		// Create the resources
+		$fullNameLiteral = $model->createLiteral($fullName);
+		$johnSmith = $model->createResource($personURI);
+		$vcard_FN= $model->createProperty(VCARD_NS.'FN');
+		$vcard_NICKNAME= $model->createProperty(VCARD_NS.'NICKNAME');
+		
+		// Add the property
+		$johnSmith->addProperty($vcard_FN, $fullNameLiteral);
+		
+		// Retrieve the John Smith vcard resource from the model
+		$vCard = $model->createResource($personURI);
+		
+		// Retrieve the value of the FN property
+		$statement = $vCard->getProperty($vcard_FN);
+		$value = $statement->getObject();
+		
+		// Add two nickname properties to vcard
+		$literal1 = $model->createLiteral("Smithy");
+		$literal2 = $model->createLiteral("Adman");
+		$vCard->addProperty($vcard_NICKNAME, $literal1);
+		$vCard->addProperty($vcard_NICKNAME, $literal2);
+		
+
+		// List the nicknames
+		echo '<b>Known nicknames for '.$fullNameLiteral->getLabel().':</b><BR>';
+		foreach ($vCard->listProperties($vcard_NICKNAME) as $currentResource)
+		{
+			echo $currentResource->getLabelObject().'<BR>';
+		};
+		
 	}
 
 	// ================================ putBottomLines($str) ================================
