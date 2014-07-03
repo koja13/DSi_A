@@ -13,6 +13,7 @@
 
 <rdf:Description rdf:about="je">
    <true>true</true>
+   <false>true</false>
 </rdf:Description>
 
 <rdf:Description rdf:about="fejs">

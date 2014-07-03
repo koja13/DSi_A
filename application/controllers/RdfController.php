@@ -78,8 +78,9 @@ class RdfController extends CI_Controller {
 		
 
 		$subject = $model->createResource("fejs");
-		$object = $model->createLiteral("zaraza");
 		$predicate = $model->createResource("je");
+		$object = $model->createLiteral("zaraza");
+		
 		
 		
 		$fullNameLiteral1 = $model->createLiteral("true");
@@ -87,6 +88,16 @@ class RdfController extends CI_Controller {
 		
 		// Add the property
 		$predicate->addProperty($tFalse, $fullNameLiteral1);
+		
+		
+		
+		
+		$fullNameLiteral1 = $model->createLiteral("true");
+		$tFalse= $model->createProperty("false");
+		
+		// Add the property
+		$predicate->addProperty($tFalse, $fullNameLiteral1);
+		
 		
 		
 		
