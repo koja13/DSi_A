@@ -22,8 +22,7 @@ class RdfController extends CI_Controller {
 		$personURI = "http://somewhere/JohnSmith";
 		$fullName = "John Smith";
 		
-		// Create an empty Model
-		$model = ModelFactory::getResModel(MEMMODEL);
+
 		
 		
 		
@@ -77,41 +76,127 @@ class RdfController extends CI_Controller {
 		
 		
 
-		$subject = $model->createResource("fejs");
-		$predicate = $model->createResource("je");
-		$object = $model->createLiteral("zaraza");
-		
-		
-		
-		$fullNameLiteral1 = $model->createLiteral("true");
-		$tFalse= $model->createProperty("true");
-		
-		// Add the property
-		$predicate->addProperty($tFalse, $fullNameLiteral1);
-		
-		
-		
-		
-		$fullNameLiteral1 = $model->createLiteral("true");
-		$tFalse= $model->createProperty("false");
-		
-		// Add the property
-		$predicate->addProperty($tFalse, $fullNameLiteral1);
-		
-		
-		
-		
-		$statement = new Statement ($subject, $predicate, $object);
-		
-		$model->addWithoutDuplicates($statement);
-		
-		$model->saveAs("modelRes.rdf", "rdf");
+
 		
 		//$model->close();
 		
 		
 		
 	}
+	
+	
+	// ================================ writeAllStatementAndProperties() ================================
+	//
+	// ajax odgovor
+	// poziva je sa klijenta fja sendSubjectObjectPredicate(form)
+	//
+	// Ulazni parametri: $sub     - subjekat iskaza	- stize kroz url u okvicu $_POST
+	//                   $obj     - objekat iskaza	- stize kroz url u okvicu $_POST
+	//					 $pre	  - predikat iskaza - stize kroz url u okvicu $_POST
+	//					 $rdfGraphName - ime RDF fajla	- stize kroz url u okvicu $_POST
+	//
+	// Na osnovu subjekta, objekta i predikta koje je dobila, ova funkcija otvara RDF fajl,
+	// i upisuje novi iskaz u rdf graf ukoliko takav vec ne postoji
+	// (za upisivanje se koristi fja addWithoutDuplicates($statement))
+	//
+	function writeAllStatementAndProperties()
+	{
+		
+		/// potrebno kad se uzimaju podaci od klijenta poslati ajax zahtevom
+		/*
+		$sub = $_POST['s'];
+		$obj = $_POST['o'];
+		$pre = $_POST['p'];
+		$rdfGraphName = $_POST['rdfGraph'];
+		
+		$pre =  $this->putBottomLines($pre);*/
+		
+		// Create an empty Model
+		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
+
+		
+		/*$subject = new Resource ($sub);
+		$object = new Literal ($obj);
+		$predicate = new Resource ($pre);*/
+		
+
+		$subject = $rdfGraph->createResource("fejs");
+		$predicate = $rdfGraph->createResource("je");
+		$object = $rdfGraph->createLiteral("zaraza");
+		
+		$trueProperty= $rdfGraph->createProperty("true");
+		$falseProperty= $rdfGraph->createProperty("false");
+		
+		// ovde treba ono što se uzme kao predikat
+		$predicateLiteral = $rdfGraph->createLiteral("je");
+		//$tFalse= $model->createProperty("true");
+		
+		// Add the property to the predicate
+		$predicate->addProperty($trueProperty, $predicateLiteral);
+		
+		
+		/////////////////////////////////////////////////////////
+		/*
+		$predicateLiteral = $model->createLiteral("true");
+		$tFalse= $model->createProperty("false");
+		
+		// Add the property
+		$predicate->addProperty($tFalse, $predicateLiteral);*/
+		
+		/////////////////////////////////////////////////////////
+		
+		
+		$statement = new Statement ($subject, $predicate, $object);
+		
+		// ucitavanje RDF grafa
+		$exists = file_exists($rdfGraphName);
+		
+		if($exists==true)
+		{
+			// ovde se prosledi ime RDF grafa, tj putanja i ime
+			$rdfGraph->load($rdfGraphName);
+		}
+		
+
+		
+		$rdfGraph->addWithoutDuplicates($statement);
+		
+		$rdfGraph->saveAs("modelRes.rdf", "rdf");
+		
+		$rdfGraph->close();
+	
+		
+		
+		
+	
+
+	/*
+		$subject = new Resource ($sub);
+		$object = new Literal ($obj);
+		$predicate = new Resource ($pre);*/
+	
+		/*$statement = new Statement ($subject, $predicate, $object);
+	
+		$rdfGraph = ModelFactory::getDefaultModel();*/
+	
+		// ucitavanje RDF grafa
+	/*	$exists = file_exists($rdfGraphName);
+	
+		if($exists==true)
+		{
+			// ovde se prosledi ime RDF grafa, tj putanja i ime
+			$rdfGraph->load($rdfGraphName);
+		}*/
+	
+	/*	$rdfGraph->addWithoutDuplicates($statement);
+	
+		$rdfGraph->saveAs($rdfGraphName, "rdf");
+	
+		$rdfGraph->close();*/
+	
+	}
+	
+	
 
 	// ================================ putBottomLines($str) ================================
 	//
