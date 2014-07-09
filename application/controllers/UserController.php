@@ -16,7 +16,7 @@ class UserController extends CI_Controller{
 	//
 	public function index()
 	{
-		if(($this->session->userdata('user_name')!=""))
+		/*if(($this->session->userdata('user_name')!=""))
 		{
 			$this->welcome();
 		}
@@ -25,8 +25,28 @@ class UserController extends CI_Controller{
 			$this->load->view('HeaderView',$data);
 			$this->load->view("SignInView.php", $data);
 			$this->load->view('FooterView',$data);
+		}*/
+		
+		
+		$this->proba();
+	}
+	
+	
+	public function proba()
+	{
+		if(($this->session->userdata('user_name')!=""))
+		{
+			$this->welcome();
+		}
+		else{
+			$data['title']= 'DSi-A';
+			$this->load->view('HeaderView',$data);
+			$this->load->view("TestView", $data);
+			$this->load->view('FooterView',$data);
 		}
 	}
+	
+	
 	
 	// ================================ login() ================================
 	//
