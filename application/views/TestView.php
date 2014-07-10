@@ -87,20 +87,31 @@
 	</div>-->
 	
 	
-	<div class="testDiv" style="background-color: #000">
-		<p class="testP" style="color: #fff; font-size: 15px; font-family: 'Roboto';" id="idbr1"> PRVI IZBOR </p>
-		<p class="testP" style="color: #fff; font-size: 15px; font-family: 'Roboto';" id="idbr2"> Drugi izbor </p>
-		<p class="testP" style="color: #fff; font-size: 15px; font-family: 'Roboto';" id="idbr3"> Treci izbor </p>
+	<div class="testDiv">
+	<span class="close">&times;</span>
+		<p class="testP testP1" id="idbr1"> Izaberite opciju jedan </p>
+		<p class="testP testP1" id="idbr2"> Opcija dva je izabrana </p>
+		<p class="testP testP1" id="idbr3"> Treci izbor je najpamentiji </p>
 	</div>
 
 	
 	<script>
-		$( ".testP" ).click(function() {
-				  alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
-				});
+		$(".testP").click(function() {
+
+				
+				$(".testP").css('background', '#fff');
+				$(".testP").css('color', '#000');
+
+				
+				$(this).css('background', '#4889C2');
+				$(this).css('color', '#fff');
+
+				alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
+		});
 
 		function selectAnswer()
 		{
 			
 		}
 	</script>
+</div>
