@@ -87,26 +87,65 @@
 	</div>-->
 	
 	
-	<div class="testDiv">
-	<span class="close">&times;</span>
-		<p class="testP testP1" id="idbr1"> Izaberite opciju jedan </p>
-		<p class="testP testP1" id="idbr2"> Opcija dva je izabrana </p>
-		<p class="testP testP1" id="idbr3"> Treci izbor je najpamentiji </p>
-	</div>
+	
+	
+			<?php $attributes = array('class' => 'chooseanswer');
+			
+				echo form_open("UserController/login", $attributes); 
+			?>
+			
+			<br />
+			
+				
+				
+					<div class="testDiv">
+					
+						<span class="close">&times;</span>
+						
+						<!--  <h4>Choose one answer:</h4>-->
+						
+						<span class="testSpan" id="idbr1"> 1. Izaberite <input type="text" size="3"></input> opciju jedan </span> <br />
+						<span class="testSpan" id="idbr2"> 2. Opcija dva je izabrana </span> <br />
+						<span class="testSpan" id="idbr3"> 3. Treci izbor je najpamentiji </span> <br />
+					
+					<input type="submit" id="submitAnswerButton" value="Submit answer!" />
+					<input type="submit" id="submitNoAnswerButton" value="FALSE!" />
+					
+					</div>
+				
+		        
+		               
+		    <?php echo form_close(); ?>
+	
+	
+	
+	
+
 
 	
 	<script>
-		$(".testP").click(function() {
 
-				
+		var addOrRemove = true;
+
+		$(".testP").hover(function() {
+			
+			$(this).css('cursor','pointer');
+			
+			}, function() {
+			
+			$(this).css('cursor','auto');
+			
+		});
+		
+		$(".testP").click(function()
+		{
 				$(".testP").css('background', '#fff');
 				$(".testP").css('color', '#000');
 
-				
-				$(this).css('background', '#4889C2');
+				$(this).css('background', '#F26000');
 				$(this).css('color', '#fff');
 
-				alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
+		//alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
 		});
 
 		function selectAnswer()
