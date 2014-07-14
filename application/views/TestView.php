@@ -127,7 +127,7 @@
 
 		var addOrRemove = true;
 
-		$(".testP").hover(function() {
+		$(".testSpan").hover(function() {
 			
 			$(this).css('cursor','pointer');
 			
@@ -137,10 +137,10 @@
 			
 		});
 		
-		$(".testP").click(function()
+		$(".testSpan").click(function()
 		{
-				$(".testP").css('background', '#fff');
-				$(".testP").css('color', '#000');
+				$(".testSpan").css('background', '#fff');
+				$(".testSpan").css('color', '#000');
 
 				$(this).css('background', '#F26000');
 				$(this).css('color', '#fff');
