@@ -22,9 +22,7 @@
 * @package 	resModel
 * @access	public
 **/
-include_once("ResLiteral.php");
-include_once("ResResource.php");
-include_once("ResProperty.php");
+ 
 class ResModel
 {
 	

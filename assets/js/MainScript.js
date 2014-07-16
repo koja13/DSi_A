@@ -16,8 +16,7 @@
 		
 		// promenljiva koja cuva ime rdf modela, inicijalno je prazan string
 		var rdfGraphName = "";
-		
-		
+
 		
 		// ==========================  KOD DODAT ZA TEST MODUL -- pocetak ================================
 		
@@ -32,6 +31,22 @@
 		
 		// bool promenljiva, da li je isteklo vreme za ucenje, na false u startu
 		var timeIsUp = false;
+		
+		// broj strana sa pitanjima
+		var numberOfPages = 5;
+		
+
+		// procenti za progress div
+		var progressPercents = 100/numberOfPages;
+		
+		// niz u kome ce se cuvati odgovori koje korisnik odabere
+		var userAnswers = new Array();
+		
+		var qNumber = 18;
+
+		// bool promenljive
+		var resultsSent = false;
+		userFinishedLearningAndQuiz = false;
 
 		// FUNKCIJE
 		
@@ -53,6 +68,16 @@
 			$(document).on('click', '.close', function(){
 			        $(this).parent().hide(400);
 			    });
+			
+			
+			
+			
+			//broj pitanja na strani
+			//var qCount = 3;
+			
+
+
+			$("#progressInDiv").width(progressPercents + "%");
 
 		});
 		
@@ -109,12 +134,21 @@
 				{
 					next = i + 2;
 					$(this).append("<a href='#' class='next-tab mover' rel='" + next + "'>Next Page &#187;</a>");
+
 				}
 				  
 				if (i != 0)
 				{
 					prev = i;
 					$(this).append("<a href='#' class='prev-tab mover' rel='" + prev + "'>&#171; Prev Page</a>");
+
+				}
+				
+				if (i == totalSize) 
+				{
+					next = i + 2;
+					$(this).append("<a href='#' class='finish-tab moverFinish' rel='" + next + "'>Finish &#187;</a>");
+					//$(this).append("<span id='finishButtonSpan'> <input  id='finishButton' type='button' onclick='finishQuiz();' value='FINISH!'/></span>");
 				}
 
 			});
@@ -142,6 +176,21 @@
 				changeLessionNumberNext();
 				
 				//alert(relNext + " to je +1 i " + relPrev + " je -1");
+				
+				
+				// povecavanje procenata prilikom prelaza na narednu grupu pitanja
+				progressPercents += 100/numberOfPages;
+
+				// animiranje progres diva na osnovu procenata u kom delu kviza se korisnik trenutno nalazi
+				$("#progressInDiv").animate({
+				    
+				    width:progressPercents + "%"
+				  }, "fast");
+				
+				if(currentLessionNumber==numberOfPages)
+				{
+					$("#progressInDiv").css({'border-top-right-radius': '7px', 'border-bottom-right-radius': '7px'});
+				}
 				return false;
 			});
 	       
@@ -168,10 +217,140 @@
 				changeLessionNumberPrev();
 
 				// alert(relNext + " to je +1 i " + relPrev + " je -1");
+				
+				// smanjivanje procenata prilikom vracanja na prethodnu grupu pitanja
+				progressPercents -= 100/numberOfPages;
+
+				// animiranje progres diva na osnovu procenata u kom delu kviza se korisnik trenutno nalazi
+				$("#progressInDiv").animate({
+					width:progressPercents + "%"
+			    }, "fast");
+				
+				if(currentLessionNumber<numberOfPages)
+				{
+					$("#progressInDiv").css({'border-top-right-radius': '0px', 'border-bottom-right-radius': '0px'});
+				}
+				return false;
+			});
+			
+			$('.finish-tab').click(function() 
+			{ 
+				finishQuiz();	
+
 				return false;
 			});
 
 		});
+		
+        // =============================== removejscssfile(filename, filetype) ==============================
+		//
+		// funkcija koja uklanja js ili css fajl sa zadatim URL-om sa strane na kojoj je pozvana
+		// poziva je fja finishQuiz nakon slanja rezultata kviza == MainScript.js ==
+		// 
+      /*  function removejscssfile(filename, filetype)
+        {
+             var targetelement=(filetype=="js")? "script" : (filetype=="css")? "link" : "none" //determine element type to create nodelist from
+             
+             var targetattr=(filetype=="js")? "src" : (filetype=="css")? "href" : "none" //determine corresponding attribute to test for
+             
+             var allsuspects=document.getElementsByTagName(targetelement)
+             for (var i=allsuspects.length; i>=0; i--)
+             { //search backwards within nodelist for matching elements to remove
+                if(allsuspects[i] && allsuspects[i].getAttribute(targetattr)!=null && allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1)
+                        allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
+             }
+        }*/
+
+        
+		
+		// =============================== finishQuiz() ==============================
+		//
+		// funkcija koja cuva korisnikove odgovore na pitanja u niz, a zatim ih prosledjuje serveru
+		// poziva je event handler za klik na dugme == finishButton, MainView ==
+		// 
+		function finishQuiz()
+		{
+			// ukoliko rezultati nisu vec poslati (moguc scenario jeste automatsko prosledjivanje rezultata nakon isteka vremena za kviz)
+			if(resultsSent!=true)
+			{
+				for(var i=1;i<=qNumber;i++)
+				{
+					if($("input[name=q"+i+"]:checked").val()==null)
+					{
+						// ukoliko nema odgovora na to pitanje, tj ukoliko nista nije cekirano onda se u niz upisuje null
+						userAnswers[i] = null;
+					}
+					else
+					{
+						// ukoliko ima odgovora na to pitanje
+						var answerId =  $("input[name=q"+i+"]:checked").attr('id');
+						var userAnswer = answerId.substr(-1,1);
+						userAnswers[i] = userAnswer;
+					}
+				}
+			
+				// belezenje akcije u bazi podataka
+				sendUserActionsLessions(null, "end_quiz", null);
+				
+				// slanje rezultata serveru
+				sendQuizResults();
+				
+				// setovanje bool promenljivih
+				
+				// korisnik je zavrsio kviz
+				userFinishedLearningAndQuiz = true;
+				
+				// rezultati su poslati
+				resultsSent = true;
+
+                //uklanja js fajlove vezane za tajmer nakon zavrsetka ucenja/kviza
+               // removejscssfile(config.base_url + "assets/countdownTimer/countdown/jquery.countdown.ReadMode.js", "js");
+              //  removejscssfile(config.base_url + "assets/countdownTimer/js/ReadModeCountdownScript.js", "js")  
+			}
+		}
+		
+
+		// =============================== sendQuizResults() ==============================
+		//
+		// Ajax fja koja salje serveru odogovore na pitanja
+		// poziva je fja finishQuiz()
+		// 	
+		function sendQuizResults()
+		{	  
+			$.ajax({
+				  // u pitanju je post zahtev
+				  type: "POST",
+				  // link ka kome se upucuje zahtev, getQuizResults predstavlja metod na serveru koji ce da odgovori na zahtev
+				  url: config.site_url + "/usercontroller/saveQuizResults",
+				  data: {	
+				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
+					  		userAnswers: userAnswers,
+							currentDateTime: getCurrentTime()
+				  		}
+				}).done(function( response ) {
+
+					if(response == "Success")
+					{
+						// brise se sadrzaj mainDiv-a
+						$("#mainDiv").empty();
+						$("#mainDiv").css({'border': '0px', 'text-align': 'center'});
+						//$("#mainDiv").css({'vertical-align': '50%'});
+
+						// brise se tajmer, tj div u kome se nalazi
+						$("#countDiv").remove();
+						
+						$("#bottomDiv").remove();
+						$("#lessionNumberSpan1").remove();
+						$("#navProgressDiv").remove();
+						
+						// korisniku se ispisuje da su rezultati sacuvani
+						//$("#mainDiv").html("Rezultati su saÄ�uvani! Hvala Å¡to ste uÄ�estovali.");
+							
+						$('#mainDiv').prepend('<img id="hvalaImg" style= "display: block, margin-left: auto,  margin-right: auto" src="' + config.base_url + 'hvala.jpg" />');
+
+					}
+				});
+		}
 		
 		
 		// ========================= sendUserActions(subject, object) ========================
@@ -187,7 +366,7 @@
 		{
 			$.ajax({
 				  type: "POST",
-				  url: config.site_url + "/UserController/getUserActions",
+				  url: config.site_url + "/usercontroller/getUserActions",
 				  data: {	
 							  currentLessionNumber: currentLessionNumber,
 							  subject: subject,
@@ -214,7 +393,7 @@
 		{
 			$.ajax({
 				  type: "POST",
-				  url: config.site_url + "/UserController/getUserActionsLessions",
+				  url: config.site_url + "/usercontroller/getUserActionsLessions",
 				  data: {	
 							  currentLessionNumber: currentLessionNumber,
 							  action: action,
@@ -490,21 +669,26 @@
 			}).done(function( response ) {
 
 				var regex = new RegExp(response, 'gi');
+               
+               for(var i=1;i<=7;i++)
+				{ 
+    				findAndReplaceDOMText(
+    					regex,
+    					$("#lessionDiv" + i).get(0),
+    					function(fill, matchIndex) {
+    					var el = document.createElement('span');
+    					el.setAttribute("class", "dragdrop");
+    					el.setAttribute("style", "color:grey");
+    					el.innerHTML = fill;
+    					return el;
+    					}
+    				);
+                   		// recima u tekstu se daje drag & drop funkcionalnost
+                        makeDraggableDroppable();
+                }
+                
 
-				findAndReplaceDOMText(
-					regex,
-					mainDiv,
-					function(fill, matchIndex) {
-					var el = document.createElement('span');
-					el.setAttribute("class", "dragdrop");
-					el.setAttribute("style", "color:grey");
-					el.innerHTML = fill;
-					return el;
-					}
-				);
 				
-				// recima u tekstu se daje drag & drop funkcionalnost
-				makeDraggableDroppable();
 				
 			});
 	}

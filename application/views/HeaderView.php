@@ -11,7 +11,8 @@
         
         <link rel="stylesheet" href="<?php echo base_url('assets/css/tabs.css')?>" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css');?>" />
-         <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/AssesmentStyle.css');?>" />
+        
+                <link rel="stylesheet" href="<?php echo base_url('assets/css/QuizStyle.css')?>" />
 
 <script type="text/javascript" >
 
@@ -45,7 +46,7 @@
 
 	
 	
-<title><?php echo (isset($title)) ? $title : "DSi2.0" ?> </title>
+<title><?php echo (isset($title)) ? $title : "DSi1.5" ?> </title>
 
 </head>
 <body class="bodyClass">
