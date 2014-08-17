@@ -275,6 +275,22 @@ class usermodel extends CI_Model {
 	}
 	
 	
+	public function saveUserActionsDSiALogs($subject, $object, $predicate, $action, $currentDateTime)
+	{
+		$data = array(
+				'session_id' => $this->session->userdata('session_id'),
+				'user_name' => $this->session->userdata('user_name') ,
+				'subject' => $subject,
+				'object' => $object,
+				'predicate' => $predicate,
+				'action' => $action,
+				'time' => $currentDateTime
+		);
+		
+		$this->db->insert('dsi_a_logs', $data);
+	
+	}
+	
 	// ======== saveUserActionsLessions($currentLessionNumber, $action, $next_prev_lession_number,$currentDateTime) ========
 	//
 	// pozivaju je fje getUserActionsLessions() i logout() === usercontroller ===

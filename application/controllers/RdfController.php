@@ -4,17 +4,23 @@ include(RDFAPI_INCLUDE_DIR . "RdfAPI.php");
 
 class RdfController extends CI_Controller {
 
+	/*private $answersAndIDsArray;
+	private $subjectObjectPredicateIDsArray;*/
+	
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
 		$this->load->helper('url');
-
+		$this->load->model('usermodel');
+		$this->load->library('session');
 	}
 
 	function index()
 	{	
 		$this->load->library("simple_html_dom");
+		
+		//$this->writeAllStatementAndProperties();
 	}
 
 	
@@ -55,18 +61,39 @@ class RdfController extends CI_Controller {
 	
 	
 		$subject = $rdfGraph->createResource("fejs");
-		$predicate = $rdfGraph->createResource("je");
+		
+		////
+		$predicate1 = $rdfGraph->createResource("je1");
+		$predicate2 = $rdfGraph->createResource("je2");
+		$predicate3 = $rdfGraph->createResource("je3");
+		$predicate4 = $rdfGraph->createResource("je4");
+		$predicate5 = $rdfGraph->createResource("je5");
+		////
+		
 		$object = $rdfGraph->createLiteral("zaraza");
 	
 		$trueProperty= $rdfGraph->createProperty("true");
 		$falseProperty= $rdfGraph->createProperty("false");
+		
 	
 		// ovde treba ono što se uzme kao predikat
-		$predicateLiteral = $rdfGraph->createLiteral("je");
+		$predicateLiteral1 = $rdfGraph->createLiteral("je1");
+		$predicateLiteral2 = $rdfGraph->createLiteral("je2");
+		$predicateLiteral3 = $rdfGraph->createLiteral("je3");
+		$predicateLiteral4 = $rdfGraph->createLiteral("je4");
+		$predicateLiteral5 = $rdfGraph->createLiteral("je5");
+		///////
+		
+		
+		
 		//$tFalse= $model->createProperty("true");
 	
 		// Add the property to the predicate
-		$predicate->addProperty($trueProperty, $predicateLiteral);
+		$predicate1->addProperty($trueProperty, $predicateLiteral1);
+		$predicate2->addProperty($falseProperty, $predicateLiteral2);
+		$predicate3->addProperty($falseProperty, $predicateLiteral3);
+		$predicate4->addProperty($falseProperty, $predicateLiteral4);
+		$predicate5->addProperty($falseProperty, $predicateLiteral5);
 	
 	
 		/////////////////////////////////////////////////////////
@@ -80,56 +107,289 @@ class RdfController extends CI_Controller {
 		/////////////////////////////////////////////////////////
 	
 	
-		$statement = new Statement ($subject, $predicate, $object);
+		$statement1 = new Statement ($subject, $predicate1, $object);
+		$statement2 = new Statement ($subject, $predicate2, $object);
+		$statement3 = new Statement ($subject, $predicate3, $object);
+		$statement4 = new Statement ($subject, $predicate4, $object);
+		$statement5 = new Statement ($subject, $predicate5, $object);
 	
 		// ucitavanje RDF grafa
-		$exists = file_exists($rdfGraphName);
+	/*	$exists = file_exists($rdfGraphName);
 	
 		if($exists==true)
 		{
 			// ovde se prosledi ime RDF grafa, tj putanja i ime
 			$rdfGraph->load($rdfGraphName);
 		}
+	*/
 	
 	
-	
-		$rdfGraph->addWithoutDuplicates($statement);
+		$rdfGraph->addWithoutDuplicates($statement1);
+		$rdfGraph->addWithoutDuplicates($statement2);
+		$rdfGraph->addWithoutDuplicates($statement3);
+		$rdfGraph->addWithoutDuplicates($statement4);
+		$rdfGraph->addWithoutDuplicates($statement5);
 	
 		$rdfGraph->saveAs("modelRes.rdf", "rdf");
 	
-		$rdfGraph->close();
-	
-	
-	
-	
-	
-	
-		/*
-			$subject = new Resource ($sub);
-		$object = new Literal ($obj);
-		$predicate = new Resource ($pre);*/
-	
-		/*$statement = new Statement ($subject, $predicate, $object);
-	
-		$rdfGraph = ModelFactory::getDefaultModel();*/
-	
-		// ucitavanje RDF grafa
-		/*	$exists = file_exists($rdfGraphName);
-	
-		if($exists==true)
-		{
-		// ovde se prosledi ime RDF grafa, tj putanja i ime
-		$rdfGraph->load($rdfGraphName);
-		}*/
-	
-		/*	$rdfGraph->addWithoutDuplicates($statement);
-	
-		$rdfGraph->saveAs($rdfGraphName, "rdf");
-	
-		$rdfGraph->close();*/
-	
 	}
 	
+	function getAnswerFromClient()
+	{
+		$sub = $_POST['s'];
+		$obj = $_POST['o'];
+		$pre = $_POST['p'];
+		
+		$currentDateTime = $_POST['currentDateTime'];
+		$rdfGraphName = $_POST['rdfGraph'];
+		
+		$action = "";
+		///////////////////////////////
+		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
+		
+		$subject = $rdfGraph->createResource($sub);
+		$object = $rdfGraph->createLiteral($obj);
+		$predicate = $rdfGraph->createResource($pre);
+		
+		$exists = file_exists($rdfGraphName);
+		
+		// ucitavanje RDF-a
+		if($exists==true)
+		{
+			// ovde se prosledi ime RDF-a, tj putanja i ime
+			$rdfGraph->load($rdfGraphName);
+		}
+		
+		
+		$statements = $rdfGraph->find($subject, $predicate, $object);
+		
+		$trueProperty= $rdfGraph->createProperty("true");
+		$falseProperty= $rdfGraph->createProperty("false");
+		
+		if (count($statements)!=0)
+		{
+			$br = 0;
+			foreach ($statements as $currentStatement)
+			{
+				
+		
+				$currentPredicate = $currentStatement->getPredicate();
+		
+				if(count($currentPredicate->listProperties($trueProperty))!=0)
+				{
+					
+					$action = "a_true";
+				}
+				else if(count($currentPredicate->listProperties($falseProperty))!=0)
+				{
+					
+					$action = "a_false";
+				}
+
+			}
+		}
+		
+		$this->usermodel->saveUserActionsDSiALogs($sub, $obj, $pre, $action, $currentDateTime);
+		
+		//echo $action;
+
+	}
+	
+	
+	/*public function getUserActions()
+	{
+		$currentLessionNumber = $_POST['currentLessionNumber'];
+		$subject = $_POST['subject'];
+		$object = $_POST['object'];
+		$currentDateTime = $_POST['currentDateTime'];
+	
+		$this->usermodel->saveUserActions($currentLessionNumber, $subject, $object, $currentDateTime);
+	}
+	*/
+	
+	function getPredicates()
+	{
+		$sub = $_POST['s'];
+		$obj = $_POST['o'];
+		$rdfGraphName = $_POST['rdfGraph'];
+		
+		
+		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
+		
+		$subject = $rdfGraph->createResource($sub);
+		$object = $rdfGraph->createLiteral($obj);
+		
+		
+		////
+		/*$predicate1 = $rdfGraph->createResource("je1");
+		$predicate2 = $rdfGraph->createResource("je2");
+		$predicate3 = $rdfGraph->createResource("je3");
+		$predicate4 = $rdfGraph->createResource("je4");
+		$predicate5 = $rdfGraph->createResource("je5");*/
+		////
+		
+		
+		
+		
+	
+		/*$subject = new Resource ($sub);
+		$object = new Literal ($obj);*/
+	
+	//	$rdfGraph = ModelFactory::getDefaultModel();
+		
+		//echo $sub. " " . $obj. " " . $rdfGraphName;
+	
+		$exists = file_exists($rdfGraphName);
+	
+		// ucitavanje RDF-a
+		if($exists==true)
+		{
+			// ovde se prosledi ime RDF-a, tj putanja i ime
+			$rdfGraph->load($rdfGraphName);
+		}
+	
+	
+		$statements = $rdfGraph->find($subject, NULL, $object);
+		
+
+		
+	//	$string = $statements[0]->getLabelObject();
+		
+	//	echo " ". $string . "   velicina: " .count($m) . "! <br />";
+		
+	//	$pred = $statements[1]->getPredicate();
+		
+		//$pred->
+		
+		$trueProperty= $rdfGraph->createProperty("true");
+		$falseProperty= $rdfGraph->createProperty("false");
+		
+		
+		/* // ovo ovde radi
+		foreach ($pred->listProperties($falseProperty) as $currentResource)
+		{
+			echo $currentResource->getLabelObject().'<BR>';
+		};
+		*/
+		
+		if (count($statements)!=0)
+		{
+			$br = 0;
+			foreach ($statements as $currentStatement)
+			{
+				$br = $br + 1;
+				echo "<p class='answerPar' id='idAnswer". $br ."'>" . $br.  ". ";
+				echo $currentStatement->getLabelSubject();
+				echo " <span style='color:green; font-weight:bold;'>" . $this->removeBottomLines($currentStatement->getLabelPredicate()) . "</span> ";
+				echo " " . $currentStatement->getLabelObject() . "<BR>";
+				echo "<script> setClickEventHandlerStatementsDiv(); </script>";
+				
+				
+				// upisivanje subjekta, predikta i objekta u niz
+				/*$this->subjectObjectPredicateIDsArray[$br][0] = $currentStatement->getLabelSubject();
+				$this->subjectObjectPredicateIDsArray[$br][1] = $this->removeBottomLines($currentStatement->getLabelPredicate());
+				$this->subjectObjectPredicateIDsArray[$br][2] = $currentStatement->getLabelObject();
+				
+				// upisivanje id-ja paragrafa i true/false vrednosti
+				$this->answersAndIDsArray[$br][0] = "idAnswer". $br;*/
+				
+				
+				echo "<script>";
+				
+				echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->removeBottomLines($currentStatement->getLabelPredicate()) ."\");";
+				/*echo "subObjPreArray['idAnswer". $br."'] = \"".$currentStatement->getLabelSubject(). "\";";
+				echo "subObjPreArray['idAnswer". $br."'][1] = \"".$this->removeBottomLines($currentStatement->getLabelPredicate()). "\";";
+				echo "subObjPreArray['idAnswer". $br."'][2] = \"".$currentStatement->getLabelObject(). "\";";*/
+				echo "</script>";
+				
+				$currentPredicate = $currentStatement->getPredicate();
+				
+				if(count($currentPredicate->listProperties($trueProperty))!=0)
+				{
+					$this->answersAndIDsArray[$br][1] = "true";
+				}
+				else if(count($currentPredicate->listProperties($falseProperty))!=0)
+				{
+					$this->answersAndIDsArray[$br][1] = "false";
+				}
+				
+
+				/*echo $this->subjectObjectPredicateIDsArray[$br][0] . "<br />";
+				echo $this->subjectObjectPredicateIDsArray[$br][1] . "<br />";
+				echo $this->subjectObjectPredicateIDsArray[$br][2] . "<br />";
+
+				echo $this->answersAndIDsArray[$br][0] . "<br />";
+				echo $this->answersAndIDsArray[$br][1] . "<br />";*/
+				
+				
+				
+				/*echo count($currentPredicate->listProperties($trueProperty));
+				
+				foreach ($currentPredicate->listProperties($trueProperty) as $currentProperty)
+				{
+					echo $currentProperty->getLabelObject().'<BR>';
+				};*/
+
+			/*	echo $currentStatement->getPredicate()->getLabel().'<BR>';
+				
+				foreach ($pred->listProperties($falseProperty) as $currentStatement)
+				{
+					echo $currentStatement->getLabelObject().'<BR>';
+				};*/
+			};
+		
+		}
+		else 
+		{
+			echo "Trenutno ne postoji veza izmedju pojmova";
+		}
+		
+		/*
+		  //// ovo ovde radi
+		 echo $pred->getLabel();
+		
+		echo "ima property " . $pred->hasProperty($trueProperty);*/
+		
+		
+		
+		
+	/*	while ($it->hasNext()) {
+			$statement = $it->next();
+		
+			$subjectsObjects .= $statement->getLabelSubject() . " ";
+		
+			$subjectsObjects .= $statement->getLabelObject() . " ";
+		}*/
+		
+		/*for ($statements->rewind(); $statements->valid(); $statements->next())
+		{
+			$currentResource=$statements->current();
+			echo $currentResource->getLabel().'<BR>';
+		};
+		*/
+		/*if($statements->size() == 0)
+		{
+			echo "Trenutno ne postoji veza izmedju pojmova";
+		}
+		else
+		{
+			$it = $statements->getStatementIterator();
+	
+			while ($it->hasNext()) {
+	
+				$statement = $it->next();
+	
+				echo $statement->getLabelSubject();
+				echo " <span style='color:green; font-weight:bold;'>" . $this->removeBottomLines($statement->getLabelPredicate()) . "</span> ";
+				echo " " . $statement->getLabelObject() . "<BR>";
+			}
+	
+	
+		}*/
+	
+		//$rdfGraph->close();
+	
+	}
 	
 	
 	

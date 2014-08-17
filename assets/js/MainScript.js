@@ -21,7 +21,7 @@
 		// ==========================  KOD DODAT ZA TEST MODUL -- pocetak ================================
 		
 		// postavljanje imena modela (jedan model za sve lekcije)
-		rdfGraphName = "model.rdf";
+		rdfGraphName = "modelRes.rdf";
 		
 		// promenljiva koja cuva link ka rdf kontroleru, koristi se kod ajax poziva
 		var rdfController = config.site_url + "/RdfController";
@@ -47,6 +47,12 @@
 		// bool promenljive
 		var resultsSent = false;
 		userFinishedLearningAndQuiz = false;
+		
+		
+		var answerIdString = "";
+		
+		var subObjPreArray = new Array();
+		
 
 		// FUNKCIJE
 		
@@ -70,7 +76,22 @@
 			    });
 			
 			
-			
+			$("#submitAnswerButton").click(function() {
+				
+				if(answerIdString!="")
+				{
+					$("#bottomDiv").hide(400);
+					sendSelectedAnswer();
+					
+					answerIdString = "";
+				}
+				else
+				{
+					alert("You need to select one answer!");
+				}
+				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
+			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
+			});
 			
 			//broj pitanja na strani
 			//var qCount = 3;
@@ -85,7 +106,7 @@
 		// ucitavanje prve lekcije na strani
 		
 		//getTextFromServer(1, "tekst1.html", "model.rdf");
-		getTextFromServer(1, "tekst1.htm", "model.rdf");
+		getTextFromServer(1, "tekst1.htm", "modelRes.rdf");
 
 		
 		// ========================= changeLessionNumberPrev() ========================
@@ -602,7 +623,7 @@
 	{
 		$.ajax({
 			  type: "POST",
-			  url: rdfController + "/getPredicate",
+			  url: rdfController + "/getPredicates",
 			  data: {
 				  		s: subject,
 						o: object ,
@@ -613,13 +634,51 @@
 				
 				
 				$("#bottomDiv").show();
+				
 				// u donji div se upisu sve veze koje vrati server
 				$("#statementDiv").html(response);
+				
+				
 
 			});
 	}
 	
 
+	function savePredicatesFromServer(idAnswer, predicate)
+	{
+		subObjPreArray[idAnswer] = predicate;
+		/*alert(idAnswer);
+		alert(subject);
+		alert(subObjPreArray[idAnswer]);
+		alert(object);*/
+		
+	}
+	
+	function sendSelectedAnswer()
+	{
+		$.ajax({
+			  type: "POST",
+			  url: rdfController + "/getAnswerFromClient",
+			  data: {
+				  		s: subject,
+				  		o: object,
+				  		p: subObjPreArray[answerIdString],
+						currentDateTime: getCurrentTime(),
+						rdfGraph: rdfGraphName
+			  		}
+		
+			}).done(function( response ) {
+				
+			//	alert(response);
+				/*
+				$("#bottomDiv").show();
+				// u donji div se upisu sve veze koje vrati server
+				$("#statementDiv").html(response);*/
+
+			});
+	}
+	
+	
 
 	// ========================= getTextFromServer(tFileName) ========================
 	//
@@ -641,10 +700,10 @@
 				$("#lessionDiv" + lessionNumber).html(response);
 				 
 				// spanovanje teksta
-				if(config.use_dsi=="yes")
-				{
-					spanReadMode(rdfGraphName);
-				}
+				//if(config.use_dsi=="yes")
+				//{
+				spanEditMode();
+				//}
 			});
 	}
 
@@ -693,6 +752,60 @@
 			});
 	}
 
+	
+	// ========================= spanEditMode() ========================
+	//
+	// Funkcija za spanovanje teksta u Edit modu
+	// poziva je funkcija span()
+	// koristi funkciju findAndReplaceDOMText, definisanu u eksternoj js biblioteci
+	// funkcija findAndReplaceDOMText pronalazi reci u tekstu i stavlja ih u html span elemente kojima se daje klasa dragdrop, 
+	// \w+/g predsatvlja regular expresion kojim se biraju sve reci u tekstu, mainDiv predstavlja id diva koji u kome se traze reci
+	//
+	function spanEditMode()
+	{
+		findAndReplaceDOMText(
+			/\w+/g,
+			mainDiv,
+			function(fill, matchIndex) {
+			var el = document.createElement('span');
+			el.setAttribute("class", "dragdrop");
+			el.innerHTML = fill;
+			return el;
+			}
+		);
+
+		// recima u tekstu se daje drag & drop funkcionalnost
+		makeDraggableDroppable();
+	}
+	
+	
+	function setClickEventHandlerStatementsDiv()
+	{
+
+		$(".answerPar").hover(function() {
+			
+			$(this).css('cursor','pointer');
+			
+			}, function() {
+			
+			$(this).css('cursor','auto');
+			
+		});
+		
+		$(".answerPar").click(function()
+		{
+				$(".answerPar").css('background', '#fff');
+				$(".answerPar").css('color', '#000');
+				$(".answerPar span:first-child").css('color', 'green');
+
+				$(this).css('background', '#4889C2');
+				$(this).css('color', '#fff');
+				$("#" + this.id + " span:first-child").css('color', '#fff');
+
+			//alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
+				answerIdString = this.id;
+		});
+	}
 
 	/*
 	function getAllLessionsFromServer()
