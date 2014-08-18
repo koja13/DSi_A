@@ -7,6 +7,8 @@ class RdfController extends CI_Controller {
 	/*private $answersAndIDsArray;
 	private $subjectObjectPredicateIDsArray;*/
 	
+	private $falseAnswersArray;
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -341,7 +343,56 @@ class RdfController extends CI_Controller {
 		}
 		else 
 		{
-			echo "Trenutno ne postoji veza izmedju pojmova";
+			//echo "Trenutno ne postoji veza izmedju pojmova";
+			
+			$statements = $rdfGraph->find(NULL, NULL, NULL);
+			
+			foreach ($statements as $currentStatement)
+			{
+				$br = $br + 1;
+
+				$currentPredicate = $currentStatement->getPredicate();
+					
+				if(count($currentPredicate->listProperties($falseProperty))!=0)
+				{
+					//$this->answersAndIDsArray[$br][1] = "false";
+					$this->falseAnswersArray[$br] = $this->removeBottomLines($currentStatement->getLabelPredicate());
+				}
+			
+			}
+			
+			
+			
+			/*
+			$br = 0;
+			foreach ($statements as $currentStatement)
+			{
+				$br = $br + 1;
+				echo "<p class='answerPar' id='idAnswer". $br ."'>" . $br.  ". ";
+				echo $currentStatement->getLabelSubject();
+				echo " <span style='color:green; font-weight:bold;'>" . $this->removeBottomLines($currentStatement->getLabelPredicate()) . "</span> ";
+				echo " " . $currentStatement->getLabelObject() . "<BR>";
+				echo "<script> setClickEventHandlerStatementsDiv(); </script>";
+
+				echo "<script>";
+			
+				echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->removeBottomLines($currentStatement->getLabelPredicate()) ."\");";
+
+				echo "</script>";
+			
+				$currentPredicate = $currentStatement->getPredicate();
+			
+				if(count($currentPredicate->listProperties($trueProperty))!=0)
+				{
+					$this->answersAndIDsArray[$br][1] = "true";
+				}
+				else if(count($currentPredicate->listProperties($falseProperty))!=0)
+				{
+					$this->answersAndIDsArray[$br][1] = "false";
+				}
+
+			}*/
+			
 		}
 		
 		/*
@@ -392,6 +443,14 @@ class RdfController extends CI_Controller {
 	}
 	
 	
+	function pickRandomNumbers($maxNumber)
+	{
+		while(count($randomNumbers)<=5)
+		{
+			$randomNumbers[count($randomNumbers) + 1] = rand(1, $maxNumber);
+		}
+		return $randomNumbers;
+	}
 	
 	// ================================ putBottomLines($str) ================================
 	//

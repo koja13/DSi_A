@@ -65,7 +65,7 @@
 
 		<div id="bottomDiv" class="answerDiv">
 					
-			<span class="close">&times;</span>
+			<span id = "spanCloseId"class="close">&times;</span>
 			
 			<div id="statementDiv"> 
 						

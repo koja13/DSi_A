@@ -247,6 +247,20 @@ class usercontroller extends CI_Controller{
 		$this->usermodel->saveUserActionsLessions($currentLessionNumber, $action, $next_prev_lession_number, $currentDateTime);
 	}
 	
+	
+	public function getUserActionsDSiALogs()
+	{
+
+		$subject = $_POST['s'];
+		$object = $_POST['o'];
+		$predicate = $_POST['p'];
+		$action = $_POST['action'];
+		$currentDateTime = $_POST['currentDateTime'];
+	
+		
+		$this->usermodel->saveUserActionsDSiALogs($subject, $object, $predicate, $action, $currentDateTime);
+	}
+	
 	// ================================ startQuiz() ================================
 	//
 	// poziva se klikom na link u navigation divu u okviru MainView pogleda

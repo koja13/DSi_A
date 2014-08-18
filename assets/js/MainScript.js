@@ -93,9 +93,28 @@
 			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
 			});
 			
+			
+			$("#submitNoAnswerButton").click(function() {
+				
+				$("#bottomDiv").hide(400);
+				sendUserActionsDSiALogs(null, null, null, "none");
+
+				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
+			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
+			});
+			
+			
+			$("#spanCloseId").click(function() {
+				
+				sendUserActionsDSiALogs(null, null, null, "cancel");
+
+				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
+			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
+			});
+			
 			//broj pitanja na strani
 			//var qCount = 3;
-			
+			spanCloseId
 
 
 			$("#progressInDiv").width(progressPercents + "%");
@@ -419,6 +438,25 @@
 							  currentLessionNumber: currentLessionNumber,
 							  action: action,
 							  next_prev_lession_number: next_prev_lession_number,
+							  currentDateTime: getCurrentTime()
+				  		}
+				}).done(function( response ) {
+					
+					//alert(response);
+				});
+		}	
+		
+		
+		function sendUserActionsDSiALogs(sub, obj, pre, action)
+		{
+			$.ajax({
+				  type: "POST",
+				  url: config.site_url + "/usercontroller/getUserActionsDSiALogs",
+				  data: {	
+			  		          s: sub,
+			  		          o: obj,					  		  
+			  		          p: pre,
+							  action: action,
 							  currentDateTime: getCurrentTime()
 				  		}
 				}).done(function( response ) {
