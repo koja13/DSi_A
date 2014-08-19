@@ -151,7 +151,7 @@ class RdfController extends CI_Controller {
 		
 		$subject = $rdfGraph->createResource($sub);
 		$object = $rdfGraph->createLiteral($obj);
-		$predicate = $rdfGraph->createResource($pre);
+		$predicate = $rdfGraph->createResource($this->putBottomLines($pre));
 		
 		$exists = file_exists($rdfGraphName);
 		
@@ -189,6 +189,10 @@ class RdfController extends CI_Controller {
 				}
 
 			}
+		}
+		else 
+		{
+			$action = "a_false";
 		}
 		
 		$this->usermodel->saveUserActionsDSiALogs($sub, $obj, $pre, $action, $currentDateTime);
@@ -347,21 +351,65 @@ class RdfController extends CI_Controller {
 			
 			$statements = $rdfGraph->find(NULL, NULL, NULL);
 			
+			$br = 0;
+			$this->falseAnswersArray[1] = "";
+			
 			foreach ($statements as $currentStatement)
 			{
-				$br = $br + 1;
-
 				$currentPredicate = $currentStatement->getPredicate();
 					
 				if(count($currentPredicate->listProperties($falseProperty))!=0)
 				{
 					//$this->answersAndIDsArray[$br][1] = "false";
-					$this->falseAnswersArray[$br] = $this->removeBottomLines($currentStatement->getLabelPredicate());
+					if(!in_array($this->removeBottomLines($currentStatement->getLabelPredicate()), $this->falseAnswersArray))
+					{
+						$br = $br + 1;
+						$this->falseAnswersArray[$br] = $this->removeBottomLines($currentStatement->getLabelPredicate());
+					}
 				}
 			
 			}
 			
+			if(count($this->falseAnswersArray)<5)
+			{
+				$rand_keys = array_rand($this->falseAnswersArray, count($this->falseAnswersArray));
+			}
+			else
+			{
+				$rand_keys = array_rand($this->falseAnswersArray, 5);
+			}
+			//echo count($this->falseAnswersArray);
 			
+			$br = 0;
+			
+			foreach ($rand_keys as $rand_key)
+			{
+				$br = $br + 1;
+				echo "<p class='answerPar' id='idAnswer". $br ."'>" . $br.  ". ";
+				//echo $currentStatement->getLabelSubject();
+				echo $sub;
+				echo " <span style='color:green; font-weight:bold;'>" . $this->falseAnswersArray[$rand_key] . "</span> ";
+			//	echo " " . $currentStatement->getLabelObject() . "<BR>";
+				echo " " . $obj . "<BR>";
+				echo "<script> setClickEventHandlerStatementsDiv(); </script>";
+				
+				echo "<script>";
+					
+				echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->falseAnswersArray[$rand_key] ."\");";
+				
+				echo "</script>";
+					
+				/*$currentPredicate = $currentStatement->getPredicate();
+					
+				if(count($currentPredicate->listProperties($trueProperty))!=0)
+				{
+					$this->answersAndIDsArray[$br][1] = "true";
+				}
+				else if(count($currentPredicate->listProperties($falseProperty))!=0)
+				{
+					$this->answersAndIDsArray[$br][1] = "false";
+				}*/
+			}
 			
 			/*
 			$br = 0;
