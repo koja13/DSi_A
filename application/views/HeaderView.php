@@ -21,6 +21,7 @@
      base_url: "<?php echo base_url(); ?>",
      site_url: "<?php echo site_url(); ?>",
      use_dsi: "<?php echo $this->session->userdata('use_dsi'); ?>",
+     mode: "<?php echo $mode; ?>",
  };
 
 </script>

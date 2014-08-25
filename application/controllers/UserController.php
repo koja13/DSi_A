@@ -205,8 +205,8 @@ class usercontroller extends CI_Controller{
 	public function start()
 	{
 
-		
-		$data=$this->usermodel->getQuestions();
+		$data['mode'] = "read";
+		//$data=$this->usermodel->getQuestions();
 		$data['title']= 'DSi A';
 		$this->load->view('HeaderView',$data);
 		$this->load->view('MainView.php', $data);
@@ -218,7 +218,7 @@ class usercontroller extends CI_Controller{
 	public function edit()
 	{
 	
-	
+		$data['mode'] = "edit";
 		//$data=$this->usermodel->getQuestions();
 		$data['title']= 'DSi A';
 		$this->load->view('HeaderView',$data);
