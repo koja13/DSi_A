@@ -207,9 +207,22 @@ class usercontroller extends CI_Controller{
 
 		
 		$data=$this->usermodel->getQuestions();
-		$data['title']= 'DSi1.5';
+		$data['title']= 'DSi A';
 		$this->load->view('HeaderView',$data);
 		$this->load->view('MainView.php', $data);
+		$this->load->view('FooterView',$data);
+	}
+	
+	
+	
+	public function edit()
+	{
+	
+	
+		//$data=$this->usermodel->getQuestions();
+		$data['title']= 'DSi A';
+		$this->load->view('HeaderView',$data);
+		$this->load->view('EditView.php', $data);
 		$this->load->view('FooterView',$data);
 	}
 	
