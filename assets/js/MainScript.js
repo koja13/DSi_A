@@ -114,7 +114,7 @@
 			
 			//broj pitanja na strani
 			//var qCount = 3;
-			spanCloseId
+
 
 
 			$("#progressInDiv").width(progressPercents + "%");
@@ -665,23 +665,56 @@
 			  data: {
 				  		s: subject,
 						o: object ,
+						mode: config.mode,
 						rdfGraph: rdfGraphName
 			  		}
 		
 			}).done(function( response ) {
 				
+				if(config.mode == "read")
+				{
+					// ukoliko je u pitanju mod za citanje, testiranje
+					$("#bottomDiv").show();
+					
+					// u donji div se upisu sve veze koje vrati server
+					$("#statementDiv").html(response);
+				}
+				else if(config.mode == "edit")
+				{
+					// ukoliko je u pitanju mod za kreiranje veza izmedju pojmova (laznih i pravih)
+					if(response == "no_relations")
+					{
+						// u pitanju je edit mode, a u rdf-u ne postoji nijedna sacuvana veza
+						$("#bottomDiv").show();
+						showEnterNewRelationsDiv(subject, object);
+					}
+					else
+					{
+						// u pitanju je edit mode, a u rdf-u su ve' sacuvane veze (lazne i prave) izmedju tih pojmova
+						$("#bottomDiv").show();
+						
+						// u donji div se upisu sve veze koje vrati server
+						$("#statementDiv").html(response);
+						
+					}
+				}
 				
-				$("#bottomDiv").show();
-				
-				// u donji div se upisu sve veze koje vrati server
-				$("#statementDiv").html(response);
-				
-				
-
 			});
 	}
 	
-
+	function showEnterNewRelationsDiv(subject, object)
+	{
+		var htmlInput = "";
+		for(var i=1; i<=5; i++)
+		{
+			htmlInput += "<p class='answerPar' id='idRelationP" + i + "'> "+ i +". " + subject + " " 
+			+ " <input id='idRelation"+ i +"' type='text' size='35' name='relation' value=''> " + " " + object
+			+ "<input type='radio' name='trueFalse' value='false'>false"+ "</p>";
+		}
+		
+		$("#statementDiv").html(htmlInput);
+	}
+	
 	function savePredicatesFromServer(idAnswer, predicate)
 	{
 		subObjPreArray[idAnswer] = predicate;

@@ -217,6 +217,7 @@ class RdfController extends CI_Controller {
 	{
 		$sub = $_POST['s'];
 		$obj = $_POST['o'];
+		$mode = $_POST['mode'];
 		$rdfGraphName = $_POST['rdfGraph'];
 		
 		
@@ -347,6 +348,10 @@ class RdfController extends CI_Controller {
 		}
 		else 
 		{
+			if($mode == "read")
+			{
+				
+			
 			//echo "Trenutno ne postoji veza izmedju pojmova";
 			
 			$statements = $rdfGraph->find(NULL, NULL, NULL);
@@ -440,7 +445,11 @@ class RdfController extends CI_Controller {
 				}
 
 			}*/
-			
+			}
+			else if($mode == "edit")
+			{
+				echo "no_relations";
+			}
 		}
 		
 		/*
