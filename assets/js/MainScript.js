@@ -103,6 +103,51 @@
 			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
 			});
 			
+			$("#submitStatementsButton").click(function() {
+				
+				/*$("#bottomDiv").hide(400);
+				sendUserActionsDSiALogs(null, null, null, "none");*/
+				var br = 1;
+				var empty = false;
+				var chechedRadioBtn = false;
+				var checkedRadioButtonNumber = 0;
+				
+				while(br<=5 && empty==false)
+				{
+					if($('#idRelation' + br).val()=="")
+					{
+						alert("You need to submit all 5 relations!");
+						empty = true;
+					}
+					br+=1;
+				}
+				
+				br = 1;
+				while(br<=5 && chechedRadioBtn==false && empty==false)
+				{
+					if($('#idRadioBtn' + br).is(":checked"))
+					{
+						chechedRadioBtn = true;
+						checkedRadioButtonNumber = br;
+					}
+					br+=1;
+				}
+				
+				
+				if(empty==false && chechedRadioBtn==true)
+				{
+					$("#bottomDiv").hide(400);
+				}
+				
+				/*if($('#idRadioBtn1').is(":checked"))
+				{
+					alert("Cekiran je!");
+				}*/
+				
+
+				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
+			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
+			});
 			
 			$("#spanCloseId").click(function() {
 				
@@ -709,7 +754,7 @@
 		{
 			htmlInput += "<p class='answerPar' id='idRelationP" + i + "'> "+ i +". " + subject + " " 
 			+ " <input id='idRelation"+ i +"' type='text' size='35'  name='relation' value=''> " + " " + object
-			+ "<input type='radio' name='trueFalse' class='trueFalseRadioBtn' value='false'>  false"+ "</p>";
+			+ "<input id='idRadioBtn"+ i +"' type='radio' name='trueFalse' class='trueFalseRadioBtn' value='false'>  false"+ "</p>";
 		}
 		
 		$("#statementDiv").html(htmlInput);
