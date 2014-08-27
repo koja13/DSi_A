@@ -708,8 +708,8 @@
 		for(var i=1; i<=5; i++)
 		{
 			htmlInput += "<p class='answerPar' id='idRelationP" + i + "'> "+ i +". " + subject + " " 
-			+ " <input id='idRelation"+ i +"' type='text' size='35' name='relation' value=''> " + " " + object
-			+ "<input type='radio' name='trueFalse' value='false'>false"+ "</p>";
+			+ " <input id='idRelation"+ i +"' type='text' size='35'  name='relation' value=''> " + " " + object
+			+ "<input type='radio' name='trueFalse' class='trueFalseRadioBtn' value='false'>  false"+ "</p>";
 		}
 		
 		$("#statementDiv").html(htmlInput);
