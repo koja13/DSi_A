@@ -43,27 +43,78 @@ class RdfController extends CI_Controller {
 	//
 	function writeAllStatementAndProperties()
 	{
-	
-		/// potrebno kad se uzimaju podaci od klijenta poslati ajax zahtevom
-		/*
-			$sub = $_POST['s'];
+		$sub = $_POST['s'];
 		$obj = $_POST['o'];
-		$pre = $_POST['p'];
+		$truePre = $_POST['truePredicate'];
+		$predicates = $_POST['newPredicates'];
 		$rdfGraphName = $_POST['rdfGraph'];
 	
-		$pre =  $this->putBottomLines($pre);*/
+		//$pre =  $this->putBottomLines($pre);
+	
+		// Create an empty Model
+		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
+		
+		// ucitavanje RDF grafa
+		$exists = file_exists($rdfGraphName);
+		
+		if($exists==true)
+		{
+			// ovde se prosledi ime RDF grafa, tj putanja i ime
+			$rdfGraph->load($rdfGraphName);
+		}
+	
+		$subject = $rdfGraph->createResource($sub);
+		$object = $rdfGraph->createLiteral($obj);
+		
+		$trueProperty= $rdfGraph->createProperty("true");
+		$falseProperty= $rdfGraph->createProperty("false");
+		
+		foreach ($predicates as $currentPredicate)
+		{
+			$predicate = $rdfGraph->createResource($currentPredicate);
+			$predicateLiteral = $rdfGraph->createLiteral($currentPredicate);
+			
+			if($currentPredicate==$truePre)
+			{
+				$predicate->addProperty($trueProperty, $predicateLiteral);
+			}
+			else
+			{
+				$predicate->addProperty($falseProperty, $predicateLiteral);
+			}
+			
+			$statement = new Statement ($subject, $predicate, $object);
+			$rdfGraph->addWithoutDuplicates($statement);
+		}
+		
+	
+		$rdfGraph->saveAs("modelRes.rdf", "rdf");
+	
+	}
+	
+	/* sigurnosna kopija
+	 * 
+	 * 
+	function writeAllStatementAndProperties()
+	{
+	
+	
+	
+		$sub = $_POST['s'];
+		$obj = $_POST['o'];
+		$truePre = $_POST['truePredicate'];
+		$predicates = $_POST['newPredicates'];
+		$rdfGraphName = $_POST['rdfGraph'];
+	
+		//$pre =  $this->putBottomLines($pre);
 	
 		// Create an empty Model
 		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
 	
-	
-		/*$subject = new Resource ($sub);
-			$object = new Literal ($obj);
-		$predicate = new Resource ($pre);*/
-	
+
 	
 		$subject = $rdfGraph->createResource("fejs");
-		
+	
 		////
 		$predicate1 = $rdfGraph->createResource("je1");
 		$predicate2 = $rdfGraph->createResource("je2");
@@ -71,12 +122,12 @@ class RdfController extends CI_Controller {
 		$predicate4 = $rdfGraph->createResource("je4");
 		$predicate5 = $rdfGraph->createResource("je5");
 		////
-		
+	
 		$object = $rdfGraph->createLiteral("zaraza");
 	
 		$trueProperty= $rdfGraph->createProperty("true");
 		$falseProperty= $rdfGraph->createProperty("false");
-		
+	
 	
 		// ovde treba ono što se uzme kao predikat
 		$predicateLiteral1 = $rdfGraph->createLiteral("je1");
@@ -85,9 +136,9 @@ class RdfController extends CI_Controller {
 		$predicateLiteral4 = $rdfGraph->createLiteral("je4");
 		$predicateLiteral5 = $rdfGraph->createLiteral("je5");
 		///////
-		
-		
-		
+	
+	
+	
 		//$tFalse= $model->createProperty("true");
 	
 		// Add the property to the predicate
@@ -99,12 +150,12 @@ class RdfController extends CI_Controller {
 	
 	
 		/////////////////////////////////////////////////////////
-		/*
-			$predicateLiteral = $model->createLiteral("true");
-		$tFalse= $model->createProperty("false");
+		
+		// $predicateLiteral = $model->createLiteral("true");
+	//	$tFalse= $model->createProperty("false");
 	
 		// Add the property
-		$predicate->addProperty($tFalse, $predicateLiteral);*/
+	//	$predicate->addProperty($tFalse, $predicateLiteral);
 	
 		/////////////////////////////////////////////////////////
 	
@@ -116,14 +167,14 @@ class RdfController extends CI_Controller {
 		$statement5 = new Statement ($subject, $predicate5, $object);
 	
 		// ucitavanje RDF grafa
-	/*	$exists = file_exists($rdfGraphName);
+		//	$exists = file_exists($rdfGraphName);
 	
-		if($exists==true)
-		{
-			// ovde se prosledi ime RDF grafa, tj putanja i ime
-			$rdfGraph->load($rdfGraphName);
-		}
-	*/
+		//if($exists==true)
+	//	{
+		// ovde se prosledi ime RDF grafa, tj putanja i ime
+	//	$rdfGraph->load($rdfGraphName);
+	//	}
+		
 	
 	
 		$rdfGraph->addWithoutDuplicates($statement1);
@@ -134,7 +185,7 @@ class RdfController extends CI_Controller {
 	
 		$rdfGraph->saveAs("modelRes.rdf", "rdf");
 	
-	}
+	}*/
 	
 	function getAnswerFromClient()
 	{

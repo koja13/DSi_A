@@ -52,8 +52,10 @@
 		var answerIdString = "";
 		
 		var subObjPreArray = new Array();
-		
 
+		var newPredicates = new Array();
+		
+		var truePredicate = ""; 
 		// FUNKCIJE
 		
 		//
@@ -105,48 +107,13 @@
 			
 			$("#submitStatementsButton").click(function() {
 				
-				/*$("#bottomDiv").hide(400);
-				sendUserActionsDSiALogs(null, null, null, "none");*/
-				var br = 1;
-				var empty = false;
-				var chechedRadioBtn = false;
-				var checkedRadioButtonNumber = 0;
-				
-				while(br<=5 && empty==false)
+				if(getNewRelations())
 				{
-					if($('#idRelation' + br).val()=="")
-					{
-						alert("You need to submit all 5 relations!");
-						empty = true;
-					}
-					br+=1;
-				}
-				
-				br = 1;
-				while(br<=5 && chechedRadioBtn==false && empty==false)
-				{
-					if($('#idRadioBtn' + br).is(":checked"))
-					{
-						chechedRadioBtn = true;
-						checkedRadioButtonNumber = br;
-					}
-					br+=1;
-				}
-				
-				
-				if(empty==false && chechedRadioBtn==true)
-				{
+					getNewRelations();
+					sendNewRelationsToServer();
 					$("#bottomDiv").hide(400);
+					
 				}
-				
-				/*if($('#idRadioBtn1').is(":checked"))
-				{
-					alert("Cekiran je!");
-				}*/
-				
-
-				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
-			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
 			});
 			
 			$("#spanCloseId").click(function() {
@@ -160,8 +127,6 @@
 			//broj pitanja na strani
 			//var qCount = 3;
 
-
-
 			$("#progressInDiv").width(progressPercents + "%");
 
 		});
@@ -172,6 +137,73 @@
 		//getTextFromServer(1, "tekst1.html", "model.rdf");
 		getTextFromServer(1, "tekst1.htm", "modelRes.rdf");
 
+		
+		function getNewRelations()
+		{
+			var br = 1;
+			var empty = false;
+			var checkedRadioBtn = false;
+			var checkedRadioButtonNumber = 0;
+			
+			while(br<=5 && empty==false)
+			{
+				if($('#idRelation' + br).val()=="")
+				{
+					alert("You need to submit all 5 relations!");
+					empty = true;
+				}
+				br+=1;
+			}
+			
+			br = 1;
+			while(br<=5 && checkedRadioBtn==false && empty==false)
+			{
+				if($('#idRadioBtn' + br).is(":checked"))
+				{
+					checkedRadioBtn = true;
+					checkedRadioButtonNumber = br;
+				}
+				br+=1;
+			}
+			
+			
+			if(empty==false && checkedRadioBtn==true)
+			{
+				for(var i=1;i<=5;i++)
+				{
+					newPredicates[i] = $('#idRelation' + i).val();
+				}
+				
+				truePredicate = $('#idRelation' + checkedRadioButtonNumber).val();
+				
+				return true;
+			}
+			return false;
+		}
+		
+		
+		function sendNewRelationsToServer()
+		{	  
+			$.ajax({
+				  // u pitanju je post zahtev
+				  type: "POST",
+				  // link ka kome se upucuje zahtev, getQuizResults predstavlja metod na serveru koji ce da odgovori na zahtev
+				  url: rdfController + "/writeAllStatementAndProperties",
+				  data: {	
+				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
+					  		s: subject,
+					  		o:object,
+					  		truePredicate: truePredicate,		
+					  		predicates: newPredicates,
+					  		rdfGraph: rdfGraphName
+				  		}
+				}).done(function( response ) {
+
+					
+				});
+		}
+		
+		
 		
 		// ========================= changeLessionNumberPrev() ========================
 		//
