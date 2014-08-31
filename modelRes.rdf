@@ -55,4 +55,52 @@
    <je8>zaraza</je8>
 </rdf:Description>
 
+<rdf:Description rdf:about="undefined">
+   <false>undefined</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="racunarstvo">
+   <undefined>Informatika</undefined>
+</rdf:Description>
+
+<rdf:Description rdf:about="nije_isto_sto_i">
+   <true>nije_isto_sto_i</true>
+</rdf:Description>
+
+<rdf:Description rdf:about="racunarstvo">
+   <nije_isto_sto_i>Informatika</nije_isto_sto_i>
+</rdf:Description>
+
+<rdf:Description rdf:about="netacan_odg_2">
+   <false>netacan_odg_2</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="racunarstvo">
+   <netacan_odg_2>Informatika</netacan_odg_2>
+</rdf:Description>
+
+<rdf:Description rdf:about="netacno_3">
+   <false>netacno_3</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="racunarstvo">
+   <netacno_3>Informatika</netacno_3>
+</rdf:Description>
+
+<rdf:Description rdf:about="netacno_4">
+   <false>netacno_4</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="racunarstvo">
+   <netacno_4>Informatika</netacno_4>
+</rdf:Description>
+
+<rdf:Description rdf:about="netacno_5">
+   <false>netacno_5</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="racunarstvo">
+   <netacno_5>Informatika</netacno_5>
+</rdf:Description>
+
 </rdf:RDF>

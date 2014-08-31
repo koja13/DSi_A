@@ -45,8 +45,8 @@ class RdfController extends CI_Controller {
 	{
 		$sub = $_POST['s'];
 		$obj = $_POST['o'];
-		$truePre = $_POST['truePredicate'];
-		$predicates = $_POST['newPredicates'];
+		$truePre = $this->putBottomLines($_POST['truePredicate']);
+		$predicates = $_POST['predicates'];
 		$rdfGraphName = $_POST['rdfGraph'];
 	
 		//$pre =  $this->putBottomLines($pre);
@@ -71,10 +71,10 @@ class RdfController extends CI_Controller {
 		
 		foreach ($predicates as $currentPredicate)
 		{
-			$predicate = $rdfGraph->createResource($currentPredicate);
-			$predicateLiteral = $rdfGraph->createLiteral($currentPredicate);
+			$predicate = $rdfGraph->createResource($this->putBottomLines($currentPredicate));
+			$predicateLiteral = $rdfGraph->createLiteral($this->putBottomLines($currentPredicate));
 			
-			if($currentPredicate==$truePre)
+			if($this->putBottomLines($currentPredicate)==$truePre)
 			{
 				$predicate->addProperty($trueProperty, $predicateLiteral);
 			}
