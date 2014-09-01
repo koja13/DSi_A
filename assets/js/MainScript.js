@@ -109,7 +109,6 @@
 				
 				if(getNewRelations())
 				{
-					getNewRelations();
 					sendNewRelationsToServer();
 					$("#bottomDiv").hide(400);
 					
@@ -172,8 +171,9 @@
 				for(var i=1;i<=5;i++)
 				{
 					newPredicates[i] = $('#idRelation' + i).val();
-				}
 				
+				}
+
 				truePredicate = $('#idRelation' + checkedRadioButtonNumber).val();
 				
 				return true;
@@ -199,7 +199,7 @@
 				  		}
 				}).done(function( response ) {
 
-					alert(response);
+					//alert(response);
 				});
 		}
 		

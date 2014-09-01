@@ -69,7 +69,25 @@ class RdfController extends CI_Controller {
 		$trueProperty= $rdfGraph->createProperty("true");
 		$falseProperty= $rdfGraph->createProperty("false");
 		
-		foreach ($predicates as $currentPredicate)
+		for ($i = 1; $i <= 5; $i++)
+		{
+			$predicate = $rdfGraph->createResource($this->putBottomLines($predicates[$i]));
+			$predicateLiteral = $rdfGraph->createLiteral($this->putBottomLines($predicates[$i]));
+				
+			if($this->putBottomLines($predicates[$i])==$truePre)
+			{
+				$predicate->addProperty($trueProperty, $predicateLiteral);
+			}
+			else
+			{
+				$predicate->addProperty($falseProperty, $predicateLiteral);
+			}
+				
+			$statement = new Statement ($subject, $predicate, $object);
+			$rdfGraph->addWithoutDuplicates($statement);
+		}
+		
+	/*	foreach ($predicates as $currentPredicate)
 		{
 			$predicate = $rdfGraph->createResource($this->putBottomLines($currentPredicate));
 			$predicateLiteral = $rdfGraph->createLiteral($this->putBottomLines($currentPredicate));
@@ -86,7 +104,7 @@ class RdfController extends CI_Controller {
 			$statement = new Statement ($subject, $predicate, $object);
 			$rdfGraph->addWithoutDuplicates($statement);
 		}
-		
+		*/
 	
 		$rdfGraph->saveAs("modelRes.rdf", "rdf");
 	
