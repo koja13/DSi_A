@@ -106,7 +106,7 @@
 			});
 			
 			$("#submitStatementsButton").click(function() {
-				
+
 				if(getNewRelations())
 				{
 					sendNewRelationsToServer();
@@ -136,6 +136,10 @@
 		//getTextFromServer(1, "tekst1.html", "model.rdf");
 		getTextFromServer(1, "tekst1.htm", "modelRes.rdf");
 
+		function changeSubmitButtonText(text)
+		{
+			$("#submitStatementsButton").prop('value', text);
+		}
 		
 		function getNewRelations()
 		{

@@ -350,69 +350,104 @@ class RdfController extends CI_Controller {
 		
 		if (count($statements)!=0)
 		{
-			$br = 0;
-			foreach ($statements as $currentStatement)
+			if ($mode == "read")
 			{
-				$br = $br + 1;
-				echo "<p class='answerPar' id='idAnswer". $br ."'>" . $br.  ". ";
-				echo $currentStatement->getLabelSubject();
-				echo " <span style='color:green; font-weight:bold;'>" . $this->removeBottomLines($currentStatement->getLabelPredicate()) . "</span> ";
-				echo " " . $currentStatement->getLabelObject() . "<BR>";
-				echo "<script> setClickEventHandlerStatementsDiv(); </script>";
-				
-				
-				// upisivanje subjekta, predikta i objekta u niz
-				/*$this->subjectObjectPredicateIDsArray[$br][0] = $currentStatement->getLabelSubject();
-				$this->subjectObjectPredicateIDsArray[$br][1] = $this->removeBottomLines($currentStatement->getLabelPredicate());
-				$this->subjectObjectPredicateIDsArray[$br][2] = $currentStatement->getLabelObject();
-				
-				// upisivanje id-ja paragrafa i true/false vrednosti
-				$this->answersAndIDsArray[$br][0] = "idAnswer". $br;*/
-				
-				
-				echo "<script>";
-				
-				echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->removeBottomLines($currentStatement->getLabelPredicate()) ."\");";
-				/*echo "subObjPreArray['idAnswer". $br."'] = \"".$currentStatement->getLabelSubject(). "\";";
-				echo "subObjPreArray['idAnswer". $br."'][1] = \"".$this->removeBottomLines($currentStatement->getLabelPredicate()). "\";";
-				echo "subObjPreArray['idAnswer". $br."'][2] = \"".$currentStatement->getLabelObject(). "\";";*/
-				echo "</script>";
-				
-				$currentPredicate = $currentStatement->getPredicate();
-				
-				if(count($currentPredicate->listProperties($trueProperty))!=0)
+				$br = 0;
+				foreach ($statements as $currentStatement)
 				{
-					$this->answersAndIDsArray[$br][1] = "true";
-				}
-				else if(count($currentPredicate->listProperties($falseProperty))!=0)
-				{
-					$this->answersAndIDsArray[$br][1] = "false";
-				}
-				
+					$br = $br + 1;
+					echo "<p class='answerPar' id='idAnswer". $br ."'>" . $br.  ". ";
+					echo $currentStatement->getLabelSubject();
+					echo " <span style='color:green; font-weight:bold;'>" . $this->removeBottomLines($currentStatement->getLabelPredicate()) . "</span> ";
+					echo " " . $currentStatement->getLabelObject() . "<BR>";
+					echo "<script> setClickEventHandlerStatementsDiv(); </script>";
+					
+					
+					// upisivanje subjekta, predikta i objekta u niz
+					/*$this->subjectObjectPredicateIDsArray[$br][0] = $currentStatement->getLabelSubject();
+					$this->subjectObjectPredicateIDsArray[$br][1] = $this->removeBottomLines($currentStatement->getLabelPredicate());
+					$this->subjectObjectPredicateIDsArray[$br][2] = $currentStatement->getLabelObject();
+					
+					// upisivanje id-ja paragrafa i true/false vrednosti
+					$this->answersAndIDsArray[$br][0] = "idAnswer". $br;*/
+					
+					
+					echo "<script>";
+					
+					echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->removeBottomLines($currentStatement->getLabelPredicate()) ."\");";
 
-				/*echo $this->subjectObjectPredicateIDsArray[$br][0] . "<br />";
-				echo $this->subjectObjectPredicateIDsArray[$br][1] . "<br />";
-				echo $this->subjectObjectPredicateIDsArray[$br][2] . "<br />";
-
-				echo $this->answersAndIDsArray[$br][0] . "<br />";
-				echo $this->answersAndIDsArray[$br][1] . "<br />";*/
-				
-				
-				
-				/*echo count($currentPredicate->listProperties($trueProperty));
-				
-				foreach ($currentPredicate->listProperties($trueProperty) as $currentProperty)
+					/*echo "subObjPreArray['idAnswer". $br."'] = \"".$currentStatement->getLabelSubject(). "\";";
+					echo "subObjPreArray['idAnswer". $br."'][1] = \"".$this->removeBottomLines($currentStatement->getLabelPredicate()). "\";";
+					echo "subObjPreArray['idAnswer". $br."'][2] = \"".$currentStatement->getLabelObject(). "\";";*/
+					echo "</script>";
+					
+					$currentPredicate = $currentStatement->getPredicate();
+					
+					if(count($currentPredicate->listProperties($trueProperty))!=0)
+					{
+						$this->answersAndIDsArray[$br][1] = "true";
+					}
+					else if(count($currentPredicate->listProperties($falseProperty))!=0)
+					{
+						$this->answersAndIDsArray[$br][1] = "false";
+					}
+					
+	
+					/*echo $this->subjectObjectPredicateIDsArray[$br][0] . "<br />";
+					echo $this->subjectObjectPredicateIDsArray[$br][1] . "<br />";
+					echo $this->subjectObjectPredicateIDsArray[$br][2] . "<br />";
+	
+					echo $this->answersAndIDsArray[$br][0] . "<br />";
+					echo $this->answersAndIDsArray[$br][1] . "<br />";*/
+					
+					
+					
+					/*echo count($currentPredicate->listProperties($trueProperty));
+					
+					foreach ($currentPredicate->listProperties($trueProperty) as $currentProperty)
+					{
+						echo $currentProperty->getLabelObject().'<BR>';
+					};*/
+	
+				/*	echo $currentStatement->getPredicate()->getLabel().'<BR>';
+					
+					foreach ($pred->listProperties($falseProperty) as $currentStatement)
+					{
+						echo $currentStatement->getLabelObject().'<BR>';
+					};*/
+				};
+			
+			}
+			else if($mode=="edit")
+			{
+				$br = 0;
+				foreach ($statements as $currentStatement)
 				{
-					echo $currentProperty->getLabelObject().'<BR>';
-				};*/
+					$br = $br + 1;
+					echo "<p class='answerPar' id='idAnswer". $br ."'>" . $br.  ". ";
+					echo $currentStatement->getLabelSubject();
+					echo " <span style='color:green; font-weight:bold;'>" . $this->removeBottomLines($currentStatement->getLabelPredicate()) . "</span> ";
+					echo " " . $currentStatement->getLabelObject() . "<BR>";
+					
+					echo "<script>";
+					echo "setClickEventHandlerStatementsDiv();";
+					echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->removeBottomLines($currentStatement->getLabelPredicate()) ."\");";
+					echo "changeSubmitButtonText(\"". "Delete relations!" ."\");";
+					echo "</script>";
+						
+					$currentPredicate = $currentStatement->getPredicate();
+						
+					if(count($currentPredicate->listProperties($trueProperty))!=0)
+					{
+						$this->answersAndIDsArray[$br][1] = "true";
+					}
+					else if(count($currentPredicate->listProperties($falseProperty))!=0)
+					{
+						$this->answersAndIDsArray[$br][1] = "false";
+					}
 
-			/*	echo $currentStatement->getPredicate()->getLabel().'<BR>';
-				
-				foreach ($pred->listProperties($falseProperty) as $currentStatement)
-				{
-					echo $currentStatement->getLabelObject().'<BR>';
-				};*/
-			};
+				};
+			}
 		
 		}
 		else 
@@ -517,7 +552,14 @@ class RdfController extends CI_Controller {
 			}
 			else if($mode == "edit")
 			{
+
 				echo "no_relations";
+				
+				/*echo "<script>";
+				echo "var no_relations = 'true';";
+				echo "changeSubmitButtonText(\"". "Submit relations!" ."\");";
+				echo "</script>";*/
+
 			}
 		}
 		
