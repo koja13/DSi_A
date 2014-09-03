@@ -761,7 +761,7 @@
 					$("#statementDiv").html(response);
 				}
 				else if(config.mode == "edit")
-				{
+				{				
 					// ukoliko je u pitanju mod za kreiranje veza izmedju pojmova (laznih i pravih)
 					if(response == "no_relations")
 					{

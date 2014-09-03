@@ -556,7 +556,7 @@ class RdfController extends CI_Controller {
 				echo "no_relations";
 				
 				/*echo "<script>";
-				echo "var no_relations = 'true';";
+				echo "no_relations = 'true';";
 				echo "changeSubmitButtonText(\"". "Submit relations!" ."\");";
 				echo "</script>";*/
 
