@@ -51,7 +51,7 @@
 		
 		var answerIdString = "";
 		
-		var subObjPreArray = new Array();
+		var predicatesArray = new Array();
 
 		var newPredicates = new Array();
 		
@@ -113,6 +113,12 @@
 					$("#bottomDiv").hide(400);
 					
 				}
+				
+				if($("#submitStatementsButton").val()=="Delete relations!")	
+				{
+					//alert("Ovo treba brisati!");
+					deleteRelations();
+				}
 			});
 			
 			$("#spanCloseId").click(function() {
@@ -136,6 +142,28 @@
 		//getTextFromServer(1, "tekst1.html", "model.rdf");
 		getTextFromServer(1, "tekst1.htm", "modelRes.rdf");
 
+		
+		function deleteRelations()
+		{	  
+			$.ajax({
+				  // u pitanju je post zahtev
+				  type: "POST",
+				  // link ka kome se upucuje zahtev, getQuizResults predstavlja metod na serveru koji ce da odgovori na zahtev
+				  url: rdfController + "/removeStatements",
+				  data: {	
+				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
+					  		s: subject,
+					  		o:object,		
+					  		predicates: predicatesArray,
+					  		rdfGraph: rdfGraphName
+				  		}
+				}).done(function( response ) {
+
+					alert(response);
+				});
+		}
+		
+		
 		function changeSubmitButtonText(text)
 		{
 			$("#submitStatementsButton").prop('value', text);
@@ -766,6 +794,7 @@
 					if(response == "no_relations")
 					{
 						// u pitanju je edit mode, a u rdf-u ne postoji nijedna sacuvana veza
+						changeSubmitButtonText("Submit relations!");
 						$("#bottomDiv").show();
 						showEnterNewRelationsDiv(subject, object);
 					}
@@ -798,11 +827,11 @@
 	
 	function savePredicatesFromServer(idAnswer, predicate)
 	{
-		subObjPreArray[idAnswer] = predicate;
-		/*alert(idAnswer);
-		alert(subject);
-		alert(subObjPreArray[idAnswer]);
-		alert(object);*/
+		predicatesArray[idAnswer] = predicate;
+		//alert(idAnswer);
+		//alert(subject);
+		//alert(predicatesArray[idAnswer]);
+		//alert(object);
 		
 	}
 	
@@ -814,7 +843,7 @@
 			  data: {
 				  		s: subject,
 				  		o: object,
-				  		p: subObjPreArray[answerIdString],
+				  		p: predicatesArray[answerIdString],
 						currentDateTime: getCurrentTime(),
 						rdfGraph: rdfGraphName
 			  		}

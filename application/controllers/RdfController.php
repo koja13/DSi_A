@@ -24,8 +24,56 @@ class RdfController extends CI_Controller {
 		
 		//$this->writeAllStatementAndProperties();
 	}
+	function removeStatements()
+	{
+		$sub = $_POST['s'];
+		$obj = $_POST['o'];
+		//$truePre = $this->putBottomLines($_POST['truePredicate']);
+		$predicates = $_POST['predicates'];
+		$rdfGraphName = $_POST['rdfGraph'];
+		
+		// Create an empty Model
+		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
+		
+		// ucitavanje RDF grafa
+		$exists = file_exists($rdfGraphName);
+		
+		if($exists==true)
+		{
+			// ovde se prosledi ime RDF grafa, tj putanja i ime
+			$rdfGraph->load($rdfGraphName);
+		}
+		
+		$subject = $rdfGraph->createResource($sub);
+		$object = $rdfGraph->createLiteral($obj);
+		
+		
+		foreach ($predicates as $key => $value)
+		{
+			echo $key . " " . $value;
+		}
+		//for ($i = 1; $i <= 5; $i++)
+		//{
+		//	$predicate = $rdfGraph->createResource($this->putBottomLines($predicates[$i]));
 
-	
+		//	echo $predicates[ $i];
+			/*$predicateLiteral = $rdfGraph->createLiteral($this->putBottomLines($predicates[$i]));
+			
+			if($this->putBottomLines($predicates[$i])==$truePre)
+			{
+			$predicate->addProperty($trueProperty, $predicateLiteral);
+			}
+			else
+			{
+			$predicate->addProperty($falseProperty, $predicateLiteral);
+			}
+			*/
+	//		$statement = new Statement ($subject, $predicate, $object);
+	//		$rdfGraph->remove($statement);
+	//	}
+		
+		$rdfGraph->saveAs("modelRes.rdf", "rdf");
+	}
 
 	// ================================ writeAllStatementAndProperties() ================================
 	//
