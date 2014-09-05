@@ -107,6 +107,12 @@
 			
 			$("#submitStatementsButton").click(function() {
 
+				if($("#submitStatementsButton").val()=="Delete relations!")	
+				{
+					//alert("Ovo treba brisati!");
+					deleteRelations();
+				}
+				
 				if(getNewRelations())
 				{
 					sendNewRelationsToServer();
@@ -114,11 +120,7 @@
 					
 				}
 				
-				if($("#submitStatementsButton").val()=="Delete relations!")	
-				{
-					//alert("Ovo treba brisati!");
-					deleteRelations();
-				}
+
 			});
 			
 			$("#spanCloseId").click(function() {
@@ -153,13 +155,14 @@
 				  data: {	
 				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
 					  		s: subject,
-					  		o:object,		
-					  		predicates: predicatesArray,
+					  		o: object,		
+					  		pred: predicatesArray,
 					  		rdfGraph: rdfGraphName
 				  		}
 				}).done(function( response ) {
 
 					alert(response);
+					//alert(predicatesArray["idanswer1"]);
 				});
 		}
 		
@@ -830,7 +833,7 @@
 		predicatesArray[idAnswer] = predicate;
 		//alert(idAnswer);
 		//alert(subject);
-		//alert(predicatesArray[idAnswer]);
+		alert(predicatesArray[idAnswer]);
 		//alert(object);
 		
 	}

@@ -28,10 +28,9 @@ class RdfController extends CI_Controller {
 	{
 		$sub = $_POST['s'];
 		$obj = $_POST['o'];
-		//$truePre = $this->putBottomLines($_POST['truePredicate']);
-		$predicates = $_POST['predicates'];
+		$predicates = $_POST['pred'];
 		$rdfGraphName = $_POST['rdfGraph'];
-		
+
 		// Create an empty Model
 		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
 		
@@ -480,7 +479,7 @@ class RdfController extends CI_Controller {
 					echo "<script>";
 					echo "setClickEventHandlerStatementsDiv();";
 					echo "savePredicatesFromServer(\"idAnswer" . $br . "\", \"" . $this->removeBottomLines($currentStatement->getLabelPredicate()) ."\");";
-					echo "changeSubmitButtonText(\"". "Delete relations!" ."\");";
+					echo "changeSubmitButtonText(\"Delete relations!\");";
 					echo "</script>";
 						
 					$currentPredicate = $currentStatement->getPredicate();
