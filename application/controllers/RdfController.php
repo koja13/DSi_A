@@ -24,11 +24,13 @@ class RdfController extends CI_Controller {
 		
 		//$this->writeAllStatementAndProperties();
 	}
+	
+	
 	function removeStatements()
 	{
 		$sub = $_POST['s'];
 		$obj = $_POST['o'];
-		$predicates = $_POST['pred'];
+		$predicates = $_POST['predicates'];
 		$rdfGraphName = $_POST['rdfGraph'];
 
 		// Create an empty Model
@@ -45,33 +47,19 @@ class RdfController extends CI_Controller {
 		
 		$subject = $rdfGraph->createResource($sub);
 		$object = $rdfGraph->createLiteral($obj);
-		
-		
-		foreach ($predicates as $key => $value)
-		{
-			echo $key . " " . $value;
-		}
-		//for ($i = 1; $i <= 5; $i++)
-		//{
-		//	$predicate = $rdfGraph->createResource($this->putBottomLines($predicates[$i]));
 
-		//	echo $predicates[ $i];
-			/*$predicateLiteral = $rdfGraph->createLiteral($this->putBottomLines($predicates[$i]));
-			
-			if($this->putBottomLines($predicates[$i])==$truePre)
-			{
-			$predicate->addProperty($trueProperty, $predicateLiteral);
-			}
-			else
-			{
-			$predicate->addProperty($falseProperty, $predicateLiteral);
-			}
-			*/
-	//		$statement = new Statement ($subject, $predicate, $object);
-	//		$rdfGraph->remove($statement);
-	//	}
 		
-		$rdfGraph->saveAs("modelRes.rdf", "rdf");
+		for ($i = 1; $i <= 5; $i++)
+		{
+			$predicate = $rdfGraph->createResource($this->putBottomLines($predicates[$i]));
+			
+			$predicate->removeProperties();
+			
+			$statement = new Statement ($subject, $predicate, $object);
+			$rdfGraph->remove($statement);
+		}
+		
+		$rdfGraph->saveAs($rdfGraphName, "rdf");
 	}
 
 	// ================================ writeAllStatementAndProperties() ================================
@@ -153,7 +141,7 @@ class RdfController extends CI_Controller {
 		}
 		*/
 	
-		$rdfGraph->saveAs("modelRes.rdf", "rdf");
+		$rdfGraph->saveAs($rdfGraphName, "rdf");
 	
 	}
 	
@@ -428,7 +416,7 @@ class RdfController extends CI_Controller {
 					echo "subObjPreArray['idAnswer". $br."'][2] = \"".$currentStatement->getLabelObject(). "\";";*/
 					echo "</script>";
 					
-					$currentPredicate = $currentStatement->getPredicate();
+				/*	$currentPredicate = $currentStatement->getPredicate();
 					
 					if(count($currentPredicate->listProperties($trueProperty))!=0)
 					{
@@ -438,7 +426,7 @@ class RdfController extends CI_Controller {
 					{
 						$this->answersAndIDsArray[$br][1] = "false";
 					}
-					
+				*/
 	
 					/*echo $this->subjectObjectPredicateIDsArray[$br][0] . "<br />";
 					echo $this->subjectObjectPredicateIDsArray[$br][1] . "<br />";
@@ -482,7 +470,7 @@ class RdfController extends CI_Controller {
 					echo "changeSubmitButtonText(\"Delete relations!\");";
 					echo "</script>";
 						
-					$currentPredicate = $currentStatement->getPredicate();
+				/*	$currentPredicate = $currentStatement->getPredicate();
 						
 					if(count($currentPredicate->listProperties($trueProperty))!=0)
 					{
@@ -491,9 +479,9 @@ class RdfController extends CI_Controller {
 					else if(count($currentPredicate->listProperties($falseProperty))!=0)
 					{
 						$this->answersAndIDsArray[$br][1] = "false";
-					}
+					}*/
 
-				};
+				}
 			}
 		
 		}

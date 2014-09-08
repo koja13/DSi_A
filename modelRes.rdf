@@ -55,44 +55,4 @@
    <je8>zaraza</je8>
 </rdf:Description>
 
-<rdf:Description rdf:about="nije_isto_sto_i">
-   <true>nije_isto_sto_i</true>
-</rdf:Description>
-
-<rdf:Description rdf:about="Racunarstvo">
-   <nije_isto_sto_i>racunarstvo</nije_isto_sto_i>
-</rdf:Description>
-
-<rdf:Description rdf:about="netacno_3">
-   <false>netacno_3</false>
-</rdf:Description>
-
-<rdf:Description rdf:about="Racunarstvo">
-   <netacno_3>racunarstvo</netacno_3>
-</rdf:Description>
-
-<rdf:Description rdf:about="netacno_4">
-   <false>netacno_4</false>
-</rdf:Description>
-
-<rdf:Description rdf:about="Racunarstvo">
-   <netacno_4>racunarstvo</netacno_4>
-</rdf:Description>
-
-<rdf:Description rdf:about="netacno_2">
-   <false>netacno_2</false>
-</rdf:Description>
-
-<rdf:Description rdf:about="Racunarstvo">
-   <netacno_2>racunarstvo</netacno_2>
-</rdf:Description>
-
-<rdf:Description rdf:about="netacno_5">
-   <false>netacno_5</false>
-</rdf:Description>
-
-<rdf:Description rdf:about="Racunarstvo">
-   <netacno_5>racunarstvo</netacno_5>
-</rdf:Description>
-
 </rdf:RDF>

@@ -111,6 +111,7 @@
 				{
 					//alert("Ovo treba brisati!");
 					deleteRelations();
+					$("#bottomDiv").hide(400);
 				}
 				
 				if(getNewRelations())
@@ -145,26 +146,7 @@
 		getTextFromServer(1, "tekst1.htm", "modelRes.rdf");
 
 		
-		function deleteRelations()
-		{	  
-			$.ajax({
-				  // u pitanju je post zahtev
-				  type: "POST",
-				  // link ka kome se upucuje zahtev, getQuizResults predstavlja metod na serveru koji ce da odgovori na zahtev
-				  url: rdfController + "/removeStatements",
-				  data: {	
-				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
-					  		s: subject,
-					  		o: object,		
-					  		pred: predicatesArray,
-					  		rdfGraph: rdfGraphName
-				  		}
-				}).done(function( response ) {
 
-					alert(response);
-					//alert(predicatesArray["idanswer1"]);
-				});
-		}
 		
 		
 		function changeSubmitButtonText(text)
@@ -227,7 +209,7 @@
 				  data: {	
 				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
 					  		s: subject,
-					  		o:object,
+					  		o: object,
 					  		truePredicate: truePredicate,		
 					  		predicates: newPredicates,
 					  		rdfGraph: rdfGraphName
@@ -238,7 +220,40 @@
 				});
 		}
 		
+		function returnPredicates()
+		{	
+			var predicatesArr = new Array();
+			
+			for(var i=1; i<=5; i++)
+			{
+				predicatesArr[i] = predicatesArray["idAnswer" + i];
+			}
+			
+			return predicatesArr;
+		}
 		
+		function deleteRelations()
+		{	  
+			$.ajax({
+				  // u pitanju je post zahtev
+				  type: "POST",
+				  // link ka kome se upucuje zahtev, getQuizResults predstavlja metod na serveru koji ce da odgovori na zahtev
+				  url: rdfController + "/removeStatements",
+				  data: {	
+				  // salju se odgovori na pitanja i vreme kada je zavrsen kviz
+					  		s: subject,
+					  		o: object,
+					  		predicates: returnPredicates(),
+					  		rdfGraph: rdfGraphName
+				  		}
+				}).done(function( response ) {
+
+					//alert(response);
+					
+					//alert (subject + " " + object);
+					//alert(predicatesArray["idAnswer1"]);
+				});
+		}
 		
 		// ========================= changeLessionNumberPrev() ========================
 		//
@@ -822,10 +837,11 @@
 		{
 			htmlInput += "<p class='answerPar' id='idRelationP" + i + "'> "+ i +". " + subject + " " 
 			+ " <input id='idRelation"+ i +"' type='text' size='35'  name='relation' value=''> " + " " + object
-			+ "<input id='idRadioBtn"+ i +"' type='radio' name='trueFalse' class='trueFalseRadioBtn' value='false'>  false"+ "</p>";
+			+ "<input id='idRadioBtn"+ i +"' type='radio' name='trueFalse' class='trueFalseRadioBtn' value=''> "+ "</p>";
 		}
 		
 		$("#statementDiv").html(htmlInput);
+		setClickEventHandlerTrueFalseRadioBtn();
 	}
 	
 	function savePredicatesFromServer(idAnswer, predicate)
@@ -833,10 +849,12 @@
 		predicatesArray[idAnswer] = predicate;
 		//alert(idAnswer);
 		//alert(subject);
-		alert(predicatesArray[idAnswer]);
+		//alert(predicatesArray[idAnswer]);
 		//alert(object);
 		
 	}
+	
+
 	
 	function sendSelectedAnswer()
 	{
@@ -990,7 +1008,42 @@
 				answerIdString = this.id;
 		});
 	}
+	
+	function setClickEventHandlerTrueFalseRadioBtn()
+	{
 
+		/*$(".answerPar").hover(function() {
+			
+			$(this).css('cursor','pointer');
+			
+			}, function() {
+			
+			$(this).css('cursor','auto');
+			
+		});*/
+		
+		$(".trueFalseRadioBtn").click(function()
+		{
+			
+			$(this).prop('value', "tacno");
+				$(".trueFalseRadioBtn").css('background', '#fff');
+				//$(".trueFalseRadioBtn").prop('value', "tacno");
+				//$(".trueFalseRadioBtn").css('color', '#000');
+				//$(".trueFalseRadioBtn span:first-child").css('color', 'green');
+
+				/*$(this).css('background', '#4889C2');
+				$(this).css('color', '#fff');
+				$("#" + this.id + " span:first-child").css('color', '#fff');*/
+
+			//alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
+				answerIdString = this.id;
+		});
+	}
+	
+	function RadionButtonSelectedValueSet(name, SelectedValue) {
+	    $('input[name="' + name+ '"]').val([SelectedValue]);
+	}
+	
 	/*
 	function getAllLessionsFromServer()
 	{
