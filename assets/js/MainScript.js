@@ -1011,33 +1011,14 @@
 	
 	function setClickEventHandlerTrueFalseRadioBtn()
 	{
-
-		/*$(".answerPar").hover(function() {
-			
-			$(this).css('cursor','pointer');
-			
-			}, function() {
-			
-			$(this).css('cursor','auto');
-			
-		});*/
 		
-		$(".trueFalseRadioBtn").click(function()
-		{
+		$("input[name='trueFalse']").click(function() {
 			
-			$(this).prop('value', "tacno");
-				$(".trueFalseRadioBtn").css('background', '#fff');
-				//$(".trueFalseRadioBtn").prop('value', "tacno");
-				//$(".trueFalseRadioBtn").css('color', '#000');
-				//$(".trueFalseRadioBtn span:first-child").css('color', 'green');
-
-				/*$(this).css('background', '#4889C2');
-				$(this).css('color', '#fff');
-				$("#" + this.id + " span:first-child").css('color', '#fff');*/
-
-			//alert( "Ovo je ID kliknutog odgovora " + this.id + " "  );
-				answerIdString = this.id;
+		    this.value = "true";
+		    this.html("tacno");
+		    alert(this.value);
 		});
+		
 	}
 	
 	function RadionButtonSelectedValueSet(name, SelectedValue) {
