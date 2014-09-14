@@ -5,7 +5,7 @@
 
 
 <div id='navigationDiv'>
-
+<img id="logo" align="right" style= "height:25px; width:65px; padding-left:10px;" src="<?php echo base_url('DSiAlogo.bmp')?>" />
 <!--
 
 <span id="lessionNumberSpan1">
@@ -31,7 +31,7 @@
 
 <!------------------------- mainDiv, centralni div u koji se ucitava tekst ------------------------->
 <div id='mainDiv'>
-<div id='lessionDiv1'>
+<div class='lessionDiv' id='lessionDiv1'>
 
 </div>
 <script>

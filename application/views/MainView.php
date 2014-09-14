@@ -1,11 +1,11 @@
 
 
-<script src="<?php //echo base_url('assets/countdownTimer/countdown/jquery.countdown.ReadMode.js')?>"></script>
-<script src="<?php //echo base_url('assets/countdownTimer/js/ReadModeCountdownScript.js')?>"></script>
+<script src="<?php echo base_url('assets/countdownTimer/countdown/jquery.countdown.ReadMode.js')?>"></script>
+<script src="<?php echo base_url('assets/countdownTimer/js/ReadModeCountdownScript.js')?>"></script>
 
 
 <div id='navigationDiv'>
-
+<img id="logo" align="right" style= "height:25px; width:65px; padding-left:10px;" src="<?php echo base_url('DSiAlogo.bmp')?>" />
 <!--
 
 <span id="lessionNumberSpan1">
@@ -31,7 +31,7 @@
 
 <!------------------------- mainDiv, centralni div u koji se ucitava tekst ------------------------->
 <div id='mainDiv'>
-<div id='lessionDiv1'>
+<div class='lessionDiv' id='lessionDiv1'>
 
 </div>
 <script>
@@ -83,16 +83,18 @@
 				
 		</div>
 		
-			<script>
+<script>
 
 	//	var addOrRemove = true;
 
 
-	</script>
-<!--  
+</script>
+	
 <div id="countDiv">
 	<div id="countdown"> </div>
 </div>
+<!--  
+
 
 
 <div id="bottomDiv">

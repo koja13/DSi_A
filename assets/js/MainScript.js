@@ -99,7 +99,7 @@
 			$("#submitNoAnswerButton").click(function() {
 				
 				$("#bottomDiv").hide(400);
-				sendUserActionsDSiALogs(null, null, null, "none");
+				sendUserActionsDSiALogs(subject, null, object, "none");
 
 				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
 			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
@@ -126,7 +126,7 @@
 			
 			$("#spanCloseId").click(function() {
 				
-				sendUserActionsDSiALogs(null, null, null, "cancel");
+				sendUserActionsDSiALogs(subject, null, object, "cancel");
 
 				// cuvanje informacije o akciji zavrsetku ucenja i startovanju testa
 			   // sendUserActionsLessions(currentLessionNumber, "end_dsi", null);
@@ -670,7 +670,11 @@
 	    	  subject = s;
 	    	  
 	    	  // slanje subjekta serveru ajax funkcijom
-	    	  sendSubject();
+	    	  if(config.mode=="edit")
+	    	  {
+	    		 sendSubject();
+	    	  }
+	    	 
 		  }
 
 	 	  // handler za kraj prevlacenja
@@ -832,7 +836,7 @@
 	
 	function showEnterNewRelationsDiv(subject, object)
 	{
-		var htmlInput = "";
+		var htmlInput = "<p class='answerParText'>Please enter new relations, and choose which one of them is the correct one:<p><br />";
 		for(var i=1; i<=5; i++)
 		{
 			htmlInput += "<p class='answerPar' id='idRelationP" + i + "'> "+ i +". " + subject + " " 
@@ -1008,7 +1012,7 @@
 				answerIdString = this.id;
 		});
 	}
-	
+/*	
 	function setClickEventHandlerTrueFalseRadioBtn()
 	{
 		
@@ -1024,7 +1028,7 @@
 	function RadionButtonSelectedValueSet(name, SelectedValue) {
 	    $('input[name="' + name+ '"]').val([SelectedValue]);
 	}
-	
+	*/
 	/*
 	function getAllLessionsFromServer()
 	{
