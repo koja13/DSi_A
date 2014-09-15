@@ -12,7 +12,9 @@ sendUserActionsLessions(null, "logged_in", null);
 			
 		echo form_open("usercontroller/start", $attributes); ?>
 		
-			<h3> <br /> Welcome <?php echo $this->session->userdata('user_name'); ?>! <br /><br />Start learning with DSi1.5 </h3>
+	<img id="logo" align="right" style= "height:100px; width:250px; padding-left: 5px;" src="<?php echo base_url('DSiAlogo.bmp')?>" />
+        
+			<h3> <br /> Welcome <?php echo $this->session->userdata('user_name'); ?>! <br /><br />Test your knowledge using DSi tool. Connect as many terms as you can for the specified time.</h3>
 
 			<input type="submit" class="button" value="Start!" />
 			

@@ -21,7 +21,7 @@ class usercontroller extends CI_Controller{
 			$this->welcome();
 		}
 		else{
-			$data['title']= 'Sign In | DSi1.5';
+			$data['title']= 'Sign In | DSi A';
 			$this->load->view('HeaderView',$data);
 			$this->load->view("SignInView.php", $data);
 			$this->load->view('FooterView',$data);
@@ -53,7 +53,7 @@ class usercontroller extends CI_Controller{
 				$this->welcome();
 			}
 			else{
-				$data['title']= 'Sign In | DSi1.5';
+				$data['title']= 'Sign In | DSi A';
 				$data['error_message']= "Login failed. Try again!";
 				$this->load->view('HeaderView',$data);
 				$this->load->view("SignInView.php", $data);
@@ -73,7 +73,7 @@ class usercontroller extends CI_Controller{
 	//
 	public function thanks()
 	{
-		$data['title']= 'Sign In | DSi1.5';
+		$data['title']= 'Sign In | DSi A';
 		$data['message'] = "Thanks for registering!";
 		$this->load->view('HeaderView',$data);
 		$this->load->view("SignInView.php", $data);
@@ -141,7 +141,7 @@ class usercontroller extends CI_Controller{
 			$this->welcome();
 		}
 		else{
-			$data['title']= 'Registration | DSi1.5';
+			$data['title']= 'Registration | DSi A';
 			$this->load->view('HeaderView',$data);
 			$this->load->view("RegistrationView", $data);
 			$this->load->view('FooterView',$data);
@@ -156,7 +156,7 @@ class usercontroller extends CI_Controller{
 	//
 	public function registerFBUser()
 	{
-		$data['title']= 'Registration | DSi1.5';
+		$data['title']= 'Registration | DSi A';
 		$this->load->view('HeaderView',$data);
 		$this->load->view("RegistrationView", $data);
 		$this->load->view('FooterView',$data);
@@ -190,7 +190,7 @@ class usercontroller extends CI_Controller{
 	//
 	public function welcome()
 	{
-		$data['title']= 'Welcome | DSi1.5';
+		$data['title']= 'Welcome | DSi A';
 		$this->load->view('HeaderView',$data);
 		$this->load->view('WelcomeView.php', $data);
 		$this->load->view('FooterView',$data);
@@ -282,7 +282,7 @@ class usercontroller extends CI_Controller{
 	//
 	public function startQuiz()
 	{
-		$data['title']= 'Start quiz | DSi1.5';
+		$data['title']= 'Start quiz | DSi A';
 		$this->load->view('HeaderView',$data);
 		$this->load->view('WelcomeQuizView.php', $data);
 		$this->load->view('FooterView',$data);
@@ -299,7 +299,7 @@ class usercontroller extends CI_Controller{
 		$data=$this->usermodel->getQuestions();
 		
 		//echo $data["questions"];
-		//$data['title']= 'Quiz | DSi1.5';
+		//$data['title']= 'Quiz | DSi A';
 		//$this->load->view('HeaderQuizView',$data);
 		//$this->load->view('QuizView.php', $data);
 		//$this->load->view('FooterView',$data);
@@ -331,7 +331,7 @@ class usercontroller extends CI_Controller{
 	{
 		$data = $this->usermodel->getResults();
 		
-		$data['title'] = 'Quiz results | DSi1.5';
+		$data['title'] = 'Quiz results | DSi A';
 		$this->load->view('HeaderQuizView',$data);
 		$this->load->view('QuizResultsView.php', $data);
 		$this->load->view('FooterView',$data);
