@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 	
+	<meta http-equiv="Content-Type" content="text/html;charset=windows-1250">
 		<link href="<?php echo base_url('dsi4.ico')?>" rel="icon" type="image/x-icon" />
 		
 		<!-------------------------------------- css fajlovi  -------------------------------------->	

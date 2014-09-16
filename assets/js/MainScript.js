@@ -903,12 +903,12 @@
 		
 			}).done(function( response ) {
 				
-				$("#lessionDiv" + lessionNumber).html(response);
-				 
+                setTimeout(function(){$("#lessionDiv" + lessionNumber).html(response); spanEditMode();}, 500);
+
 				// spanovanje teksta
 				//if(config.use_dsi=="yes")
 				//{
-				spanEditMode();
+				    //spanEditMode();
 				//}
 			});
 	}
