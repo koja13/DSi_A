@@ -23,6 +23,100 @@ class RdfController extends CI_Controller {
 		$this->load->library("simple_html_dom");
 		
 		//$this->writeAllStatementAndProperties();
+		
+		
+		
+		
+		
+		
+		
+		
+		/*$sub = $_POST['s'];
+		$obj = $_POST['o'];
+		$truePre = $_POST['truePredicate'];
+		$predicates = $_POST['newPredicates'];
+		$rdfGraphName = $_POST['rdfGraph'];*/
+		
+		//$pre =  $this->putBottomLines($pre);
+		
+		// Create an empty Model
+		$rdfGraph = ModelFactory::getResModel(MEMMODEL);
+		
+		
+		
+		//$subject = $rdfGraph->createResource("fejs");
+		
+		////
+		$predicate1 = $rdfGraph->createResource("nekipredikat");
+		/*$predicate2 = $rdfGraph->createResource("je2");
+		$predicate3 = $rdfGraph->createResource("je3");
+		$predicate4 = $rdfGraph->createResource("je4");
+		$predicate5 = $rdfGraph->createResource("je5");*/
+		////
+		
+		//$object = $rdfGraph->createLiteral("zaraza");
+		
+		$trueProperty= $rdfGraph->createProperty("true");
+		$falseProperty= $rdfGraph->createProperty("false");
+		
+		
+		// ovde treba ono što se uzme kao predikat
+		$predicateLiteral1 = $rdfGraph->createLiteral("literalnekogpredikata");
+	/*	$predicateLiteral2 = $rdfGraph->createLiteral("je2");
+		$predicateLiteral3 = $rdfGraph->createLiteral("je3");
+		$predicateLiteral4 = $rdfGraph->createLiteral("je4");
+		$predicateLiteral5 = $rdfGraph->createLiteral("je5");*/
+		///////
+		
+		
+		
+		//$tFalse= $model->createProperty("true");
+		
+		// Add the property to the predicate
+		$predicate1->addProperty($trueProperty, $predicateLiteral1);
+		/*$predicate2->addProperty($falseProperty, $predicateLiteral2);
+		$predicate3->addProperty($falseProperty, $predicateLiteral3);
+		$predicate4->addProperty($falseProperty, $predicateLiteral4);
+		$predicate5->addProperty($falseProperty, $predicateLiteral5);*/
+		
+		
+		/////////////////////////////////////////////////////////
+		
+		// $predicateLiteral = $model->createLiteral("true");
+		//	$tFalse= $model->createProperty("false");
+		
+		// Add the property
+		//	$predicate->addProperty($tFalse, $predicateLiteral);
+		
+		/////////////////////////////////////////////////////////
+		
+		
+		$statement1 = new Statement (null, $predicate1, null);
+		/*$statement2 = new Statement ($subject, $predicate2, $object);
+		$statement3 = new Statement ($subject, $predicate3, $object);
+		$statement4 = new Statement ($subject, $predicate4, $object);
+		$statement5 = new Statement ($subject, $predicate5, $object);*/
+		
+		// ucitavanje RDF grafa
+		//	$exists = file_exists($rdfGraphName);
+		
+		//if($exists==true)
+		//	{
+		// ovde se prosledi ime RDF grafa, tj putanja i ime
+		//	$rdfGraph->load($rdfGraphName);
+		//	}
+		
+		
+		
+		$rdfGraph->addWithoutDuplicates($statement1);
+		/*$rdfGraph->addWithoutDuplicates($statement2);
+		$rdfGraph->addWithoutDuplicates($statement3);
+		$rdfGraph->addWithoutDuplicates($statement4);
+		$rdfGraph->addWithoutDuplicates($statement5);*/
+		
+		$rdfGraph->saveAs("modelRes.rdf", "rdf");
+		
+		
 	}
 	
 	
