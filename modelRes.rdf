@@ -12,87 +12,105 @@
    xmlns:dcterms="http://purl.org/dc/terms/"
    xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
 
-<rdf:Description rdf:about="je1">
-   <true>je1</true>
+<rdf:Description rdf:about="Bratislav">
+   <je_u_braku_sa>Milica</je_u_braku_sa>
+   <je_razveden-a_od>Milica</je_razveden-a_od>
+   <je_udovac_od>Milica</je_udovac_od>
+   <je_dete_od>Milica</je_dete_od>
+   <je_usvojeno_dete_od>Milica</je_usvojeno_dete_od>
 </rdf:Description>
 
-<rdf:Description rdf:about="je2">
-   <false>je2</false>
+<rdf:Description rdf:about="je_u_braku_sa">
+   <true>je_u_braku_sa</true>
 </rdf:Description>
 
-<rdf:Description rdf:about="je3">
-   <false>je3</false>
+<rdf:Description rdf:about="je_razveden-a_od">
+   <false>je_razveden-a_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="je4">
-   <false>je4</false>
+<rdf:Description rdf:about="je_udovac_od">
+   <false>je_udovac_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="je5">
-   <false>je5</false>
+<rdf:Description rdf:about="je_dete_od">
+   <false>je_dete_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="je6">
-   <false>je6</false>
+<rdf:Description rdf:about="je_usvojeno_dete_od">
+   <false>je_usvojeno_dete_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="je7">
-   <false>je7</false>
+<rdf:Description rdf:about="Milan">
+   <je_roditelj_od>Vesna</je_roditelj_od>
+   <je_razveden-a_od>Vesna</je_razveden-a_od>
+   <je_brat_od>Vesna</je_brat_od>
+   <je_deda_od>Vesna</je_deda_od>
+   <je_unuk_od>Vesna</je_unuk_od>
 </rdf:Description>
 
-<rdf:Description rdf:about="je8">
-   <false>je8</false>
+<rdf:Description rdf:about="je_roditelj_od">
+   <false>je_roditelj_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="fejs">
-   <je1>zaraza</je1>
-   <je2>zaraza</je2>
-   <je3>zaraza</je3>
-   <je4>zaraza</je4>
-   <je5>zaraza</je5>
-   <je6>zaraza</je6>
-   <je7>zaraza</je7>
-   <je8>zaraza</je8>
+<rdf:Description rdf:about="je_razveden-a_od">
+   <true>je_razveden-a_od</true>
 </rdf:Description>
 
-<rdf:Description rdf:about="nije_isto_sto_i">
-   <true>nije_isto_sto_i</true>
+<rdf:Description rdf:about="je_brat_od">
+   <false>je_brat_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="Informatika">
-   <nije_isto_sto_i>racunarstvo</nije_isto_sto_i>
+<rdf:Description rdf:about="je_deda_od">
+   <false>je_deda_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="je_isto_sto_i">
-   <false>je_isto_sto_i</false>
+<rdf:Description rdf:about="je_unuk_od">
+   <false>je_unuk_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="Informatika">
-   <je_isto_sto_i>racunarstvo</je_isto_sto_i>
+<rdf:Description rdf:about="je_brat_od">
+   <false>je_brat_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="je_deo_nauke">
-   <false>je_deo_nauke</false>
+
+
+
+
+
+<rdf:Description rdf:about="Miroslav">
+   <je_brat_od>Bratislav</je_brat_od>
 </rdf:Description>
 
-<rdf:Description rdf:about="Informatika">
-   <je_deo_nauke>racunarstvo</je_deo_nauke>
+<rdf:Description rdf:about="je_zet_od">
+   <false>je_zet_od</false>
 </rdf:Description>
 
-<rdf:Description rdf:about="nešto_sasvim_suprotno_od">
-   <false>nešto_sasvim_suprotno_od</false>
+<rdf:Description rdf:about="Miroslav">
+   <je_zet_od>Bratislav</je_zet_od>
 </rdf:Description>
 
-<rdf:Description rdf:about="Informatika">
-   <nešto_sasvim_suprotno_od>racunarstvo</nešto_sasvim_suprotno_od>
+<rdf:Description rdf:about="je_ujak_od">
+   <true>je_ujak_od</true>
 </rdf:Description>
 
-<rdf:Description rdf:about="je_totalno_ista_naucna_oblast_kao_i">
-   <false>je_totalno_ista_naucna_oblast_kao_i</false>
+<rdf:Description rdf:about="Miroslav">
+   <je_ujak_od>Bratislav</je_ujak_od>
 </rdf:Description>
 
-<rdf:Description rdf:about="Informatika">
-   <je_totalno_ista_naucna_oblast_kao_i>racunarstvo</je_totalno_ista_naucna_oblast_kao_i>
+<rdf:Description rdf:about="je_roditelj_od">
+   <false>je_roditelj_od</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="Miroslav">
+   <je_roditelj_od>Bratislav</je_roditelj_od>
+</rdf:Description>
+
+<rdf:Description rdf:about="je_deda_od">
+   <false>je_deda_od</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="Miroslav">
+   <je_deda_od>Bratislav</je_deda_od>
 </rdf:Description>
 
 </rdf:RDF>

@@ -28,6 +28,9 @@ h3, h4
 #lessionDiv1
 {
 	height:95%;
+	width: 78%;
+	margin: auto;
+	font-size: 15px;
 }
 
 .trueFalseRadioBtn

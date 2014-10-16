@@ -1,32 +1,93 @@
-<html>
-<head></head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<style type="text/css">
+
+body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #4E5869;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+}
+a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border: none;
+}
+
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color:#414958;
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #4E5869;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+	text-decoration: none;
+}
+
+/* ~~ this container surrounds all other divs giving them their percentage-based width ~~ */
+.container {
+	width: 80%;
+	max-width: 1260px;/* a max-width may be desirable to keep this layout from getting too wide on a large monitor. This keeps line length more readable. IE6 does not respect this declaration. */
+	min-width: 780px;/* a min-width may be desirable to keep this layout from getting too narrow. This keeps line length more readable in the side columns. IE6 does not respect this declaration. */
+	background-color: #FFF;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout. It is not needed if you set the .container's width to 100%. */
+}
+
+/* ~~ This is the layout information. ~~ 
+
+1) Padding is only placed on the top and/or bottom of the div. The elements within this div have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
+
+*/
+.content {
+	padding: 10px 0;
+}
+
+/* ~~ This grouped selector gives the lists in the .content area space ~~ */
+.content ul, .content ol { 
+	padding: 0 15px 15px 40px; /* this padding mirrors the right padding in the headings and paragraph rule above. Padding was placed on the bottom for space between other elements on the lists and on the left to create the indention. These may be adjusted as you wish. */
+}
+
+/* ~~ miscellaneous float/clear classes ~~ */
+.fltrt {  /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the #container) if the overflow:hidden on the .container is removed */
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+
+</style></head>
+
 <body>
-<h2 class="title_section" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600; margin-top: 0px; margin-bottom: 10px; font-size: 20px; line-height: 25px; color: rgb(80, 80, 80);">Sta su racunari?</h2>
 
-<div style="color: rgb(80, 80, 80); font-family: WOL_Reg, 'Segoe UI', Tahoma, Helvetica, sans-serif; line-height: 20px; font-size: 15px;">
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;">Racunari su masine koje izvrsavaju zadatke ili izracunavanja na osnovu skupa uputstava ili&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">programa</span>. Prvi elektronski racunari su proizvedeni cetrdesetih godina XX veka i bili su ogromne masine za cije su koriscenje bili potrebni timovi ljudi. U poredenju sa tim ranim modelima, danasnji racunari su zapanjujuci. Ne samo da su hiljadama puta brzi, vec mogu da stanu na sto, u krilo ili cak u dzep.</p>
-
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;">Osnovu rada racunara cini interakcija izmedu hardvera i softvera.&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">Hardver</span>&nbsp;predstavljaju delovi racunara koje mozete da vidite i dodirnete, ukljucujuci kuciste i sve unutar njega. Najvazniji deo hardvera je mali pravougaoni cip unutar racunara koji se naziva<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">centralni procesor (CPU)</span>&nbsp;ili&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">mikroprocesor</span>. To je &bdquo;mozak&ldquo; racunara &mdash; deo koji prevodi uputstva i izvrsava izracunavanja. Delovi hardvera poput monitora, tastature, misa, stampaca i ostalih komponenti cesto se nazivaju&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">hardverski uredaji</span>&nbsp;ili&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">uredaji</span>.</p>
-
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;"><span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">Softver</span>&nbsp;predstavljaju uputstva ili programi koji govore hardveru sta treba da radi. Program za obradu teksta koji koristite za pisanje pisama na racunaru je vrsta softvera. Operativni sistem (OS) je softver koji upravlja racunarom i uredajima koji su povezani sa njim. Dva poznata operativna sistema su Windows i Mac OS. Vas racunar koristi operativni sistem Windows.</p>
-
-<h2 class="title_section" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600; margin-top: 0px; margin-bottom: 10px; font-size: 20px; line-height: 25px; color: rgb(80, 80, 80);">Vrste racunara</h2>
-
-<div style="color: rgb(80, 80, 80); font-family: WOL_Reg, 'Segoe UI', Tahoma, Helvetica, sans-serif; line-height: 20px;">
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;">Racunari se razlikuju po velicini i mogucnostima. Na jednom kraju skale se nalaze<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">superracunari</span>, veliki racunari sa hiljadama povezanih mikroporcesora koji izvrsavaju veoma slozena izracunavanja. Na drugom kraju su mali racunari ugradeni u automobile, TV uredaje, stereo sisteme, kalkulatore i uredaje. Oni su napravljeni za izvrsavanje ogranicenog broja zadataka.</p>
-
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;"><span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">Licni racunar</span>&nbsp;ili&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">PC</span>&nbsp;je dizajniran da ga u jednom trenutku koristi samo jedna osoba. U ovom odeljku su opisane razne vrste licnih racunara: stoni racunari, laptop racunari, rucni racunari i tablet racunari.</p>
-
-<div class="section sectionNormal" style=" color: rgb(80, 80, 80); min-height: 0px; display: inline;">
-<h2 class="title_section" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600; margin-top: 0px; margin-bottom: 8px; font-size: 20px; line-height: 20px;">Stoni racunari</h2>
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;"><img alt="" src="../../textFiles/kompjuter.png" /></p>
-<div>
-<p class="para" style="margin-top: 0px; margin-bottom: 15px;"><span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">Stoni racunari</span>&nbsp;su namenjeni za upotrebu na radnom stolu ili stolu. Oni su obicno veci i mocniji od ostalih vrsta licnih racunara. Stoni racunari su sastavljeni od odvojenih komponenti. Osnovna komponenta zvana&nbsp;<span class="newTerm" style="font-family: WOL_SB, 'Segoe UI Semibold', 'Segoe UI', Tahoma, Helvetica, sans-serif; font-weight: 600;">sistemska jedinica</span>&nbsp;je obicno pravougaono kuciste koje se nalazi na stolu ili ispod njega. Ostale komponente, kao sto su monitor, mis i tastatura, su povezane sa sistemskom jedinicom.</p>
-
-
-</div>
-</div>
-</div>
-</div>
+<div class="container">
+  <div class="content">
+    <br /><p>Sine, da ti kaže čika Bratislav, ja sam u svoje vreme napravio mnogo. Ne kao siroti Milan. Još u vojsci, kad smo se upoznali, rasprave o novcu su krenule i znao sam da neće napraviti ništa. Moja pokojna Milica ga je volela, govorila je da nije imao sreće. Njegova Bojana i dan danas ume da kaže da je bio glup. Nije novac sreća, sine moj, nego nauka. Moraš da ga voliš i da znaš sa njim. A nije ni za svakog. Rođenu decu nisam mogao da naučim. Miroslav je uvek voleo da je lagodno, nije hteo da se oznoji. Snežana mi je bila više ćerka nego on. Iako ima oba živa roditelja, mene je gledala kao oca rođenog. Ne mogu da prežalim tu bolest prokletu. Kao da su joj dani odbrojani. Ne mogu da se pomirim sa tim. Ne treba stariji da ispraćaju mlađe. A kćer? Ona je uvek bila jača. Nadi dosta malo, Nada od malog pravi veliko. Miroslavu nikad dosta. Bojim se za njega. Teće znati da živi bez Snežane. Propašće. I ko će decu da mu gleda? Oboje zdravi, lepi, vredni, svako da poželi onakvu decu, nije što su moji. Nikada im škola nije pala teško, nikad problem oko njih. Druga deca ih vole, ne znaš da li više zivkaju Ivanu ili Mladena, te druženje, te sport. Čak su i u ljubavi srećni. On doduše krije tu njegovu Natašu, nikad joj oči nisam video. Ali zato bi se Ivana sutra udala. A i neka, Petar je dobar dečak. Ambiciozan. Kao da i nju vuče napred. Samo da ih ne povuče nazad tolika ambicija...</p>
+    <br /><p>Eto, sine, ja sam napravio mnogo. I bio sam ambiciozan. I nije me pustilo. Takav sam, pravio bih još da mi nisu ove godine. Ali radom. Znojem. Nisam verovao u lako i brzo, niti verujem. A sada je neko drugo vreme, svi hoće brzo. Svi misle da je lako. Ne krivim decu, oni uče od roditelja. Eto taj Ivanin dečak. Malo se čika Bratislav raspitao. Valjda čovek da zna gde su mu deca i sa kim su. Majka je tu problem, tako ga je vaspitala, a sigurno je i Natašu. Nisu razliku pravili Milan i Bojana, kako su sa Anom tako su i sa Vesnom. Pričao mi je Milan koliko su pazili. Voljena je bila Vesna i priznata, kao pravo dete da im je. Nisu se nadali da će svoje dete ikad imati kad su je sebi uzeli. Iznenadila ih Ana posle. Ali taj neki bol u njoj ni danas joj mira ne da te gluposti pravi. Nisu to više godine za takvo ponašanje.</p>
+  </div>
+  <!-- end .container --></div>
 </body>
 </html>
