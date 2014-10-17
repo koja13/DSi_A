@@ -48,20 +48,8 @@
    <je_unuk_od>Vesna</je_unuk_od>
 </rdf:Description>
 
-<rdf:Description rdf:about="je_roditelj_od">
-   <false>je_roditelj_od</false>
-</rdf:Description>
-
 <rdf:Description rdf:about="je_razveden-a_od">
    <true>je_razveden-a_od</true>
-</rdf:Description>
-
-<rdf:Description rdf:about="je_brat_od">
-   <false>je_brat_od</false>
-</rdf:Description>
-
-<rdf:Description rdf:about="je_deda_od">
-   <false>je_deda_od</false>
 </rdf:Description>
 
 <rdf:Description rdf:about="je_unuk_od">
@@ -71,11 +59,6 @@
 <rdf:Description rdf:about="je_brat_od">
    <false>je_brat_od</false>
 </rdf:Description>
-
-
-
-
-
 
 <rdf:Description rdf:about="Miroslav">
    <je_brat_od>Bratislav</je_brat_od>
@@ -111,6 +94,46 @@
 
 <rdf:Description rdf:about="Miroslav">
    <je_deda_od>Bratislav</je_deda_od>
+</rdf:Description>
+
+<rdf:Description rdf:about="je_brat_od">
+   <false>je_brat_od</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="Bratislav">
+   <je_brat_od>Milan</je_brat_od>
+</rdf:Description>
+
+<rdf:Description rdf:about="je_ujak_od">
+   <true>je_ujak_od</true>
+</rdf:Description>
+
+<rdf:Description rdf:about="Bratislav">
+   <je_ujak_od>Milan</je_ujak_od>
+</rdf:Description>
+
+<rdf:Description rdf:about="nvbn">
+   <false>nvbn</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="Bratislav">
+   <nvbn>Milan</nvbn>
+</rdf:Description>
+
+<rdf:Description rdf:about="ncvnc">
+   <false>ncvnc</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="Bratislav">
+   <ncvnc>Milan</ncvnc>
+</rdf:Description>
+
+<rdf:Description rdf:about="ncbc">
+   <false>ncbc</false>
+</rdf:Description>
+
+<rdf:Description rdf:about="Bratislav">
+   <ncbc>Milan</ncbc>
 </rdf:Description>
 
 </rdf:RDF>
